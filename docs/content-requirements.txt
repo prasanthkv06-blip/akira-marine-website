@@ -1,0 +1,237 @@
+
+---
+
+## 3. Agent Roles & Responsibilities
+
+### 3.1 Lead Agent (Project Manager)
+- **Role:** Orchestrates the entire project, ensures alignment, tracks progress, manages timeline, and resolves conflicts.
+- **Responsibilities:**
+  - Define project scope, milestones, and deadlines.
+  - Assign tasks to appropriate agents based on phase.
+  - Conduct daily stand-ups (via logs) to review progress.
+  - Consolidate reports and report to client.
+  - Approve phase completion before moving to next.
+- **Inputs:** Client requirements, feedback.
+- **Outputs:** Project plan, timeline, status reports, sign-offs.
+
+### 3.2 Market Analyst Agent
+- **Role:** Research competitors, industry trends, and target audience.
+- **Responsibilities:**
+  - Analyze competitor websites in marine services and LNG sectors.
+  - Identify high-value keywords and topics relevant to Wärtsilä dual-fuel maintenance.
+  - Provide insights on tone, messaging, and unique selling points.
+  - Research search intent for target keywords to guide content strategy.
+- **Outputs:** Competitor analysis report, keyword list (with search volume and difficulty), audience persona.
+
+### 3.3 Content Strategist Agent
+- **Role:** Plan site structure, content hierarchy, and user journey with SEO as a foundation.
+- **Responsibilities:**
+  - Develop sitemap and wireframes (in collaboration with UI/UX) that prioritize SEO best practices.
+  - Define content requirements for each page, including meta data and header structure.
+  - Create editorial calendar for blog/resources if applicable, targeting long-tail keywords.
+- **Outputs:** Sitemap, content briefs for each page (including SEO directives), wireframe drafts.
+
+### 3.4 Copywriter Agent
+- **Role:** Write all website copy with technical accuracy, persuasive tone, and SEO optimization.
+- **Responsibilities:**
+  - Draft homepage, about, services, Wärtsilä expertise, contact pages.
+  - Incorporate target keywords naturally and strategically.
+  - Ensure technical terms (Wärtsilä, dual-fuel, LNG) are used correctly.
+  - Write compelling meta titles and descriptions for each page.
+  - Revise based on feedback from Lead, SEO Specialist, and QC.
+- **Outputs:** Complete website copy (text files or Google Doc) with SEO annotations.
+
+### 3.5 UI/UX Designer Agent
+- **Role:** Design visual layout, user interface, and user experience.
+- **Responsibilities:**
+  - Create low-fidelity wireframes based on sitemap and content strategy.
+  - Design high-fidelity mockups in Figma/Adobe XD following "modern classic" style (deep blues, burnt orange accents, clean typography).
+  - Design interactive elements (hover states, menus, buttons).
+  - Ensure responsive design for mobile, tablet, desktop.
+  - Collaborate with SEO Specialist to ensure design supports SEO (e.g., mobile-friendliness, readable fonts).
+- **Outputs:** Wireframes, interactive prototype, design system.
+
+### 3.6 Graphic Designer Agent
+- **Role:** Create all visual assets: logos (if needed), icons, infographics, image editing.
+- **Responsibilities:**
+  - Source or create custom icons for services.
+  - Design infographics explaining dual-fuel engine process or service workflow.
+  - Edit client-provided photos of real projects.
+  - Prepare images for web (optimize size, format) with descriptive file names and alt text (in collaboration with SEO).
+- **Outputs:** Icon set, infographics, edited photos, favicon.
+
+### 3.7 SEO Specialist Agent
+- **Role:** Lead all SEO efforts to ensure maximum visibility in search engines.
+- **Responsibilities:**
+  - Develop comprehensive SEO strategy covering on-page, technical, and off-page (if applicable).
+  - Perform keyword research and mapping to pages.
+  - Optimize site structure, URL slugs, internal linking.
+  - Implement structured data (schema markup) for rich snippets.
+  - Set up Google Analytics, Google Search Console, and Bing Webmaster Tools.
+  - Monitor Core Web Vitals and page speed, recommend improvements.
+  - Ensure all content meets SEO best practices (headers, meta, alt text).
+  - Provide guidance to Copywriter and Developer throughout.
+  - Conduct post-launch SEO audit and ongoing monitoring.
+- **Outputs:** SEO strategy document, keyword map, implementation of SEO settings, regular performance reports.
+
+### 3.8 Security Agent
+- **Role:** Ensure the website is secure against cyber threats, data breaches, cloning, leeching, and other attacks.
+- **Responsibilities:**
+  - Perform threat modeling and risk assessment during design phase.
+  - Review architecture for security vulnerabilities (OWASP Top 10).
+  - Implement security headers (CSP, HSTS, X-Frame-Options, etc.).
+  - Configure secure hosting environment (firewalls, DDoS protection, regular patches).
+  - Ensure all forms are protected against spam and injection attacks (CAPTCHA, validation).
+  - Set up SSL/TLS with strong configuration.
+  - Implement measures to prevent content scraping, hotlinking, and cloning (e.g., .htaccess rules, CDN features).
+  - Conduct security testing (penetration testing, vulnerability scanning) before launch.
+  - Establish backup and disaster recovery procedures.
+  - Advise on ongoing security maintenance and monitoring.
+- **Outputs:** Security architecture plan, security checklist, vulnerability assessment reports, final security sign-off.
+
+### 3.9 Web Developer Agent
+- **Role:** Build the website using chosen tech stack (e.g., Webflow, WordPress custom theme), implementing designs and integrating SEO/security requirements.
+- **Responsibilities:**
+  - Set up development environment.
+  - Implement UI/UX designs faithfully with HTML/CSS/JS (or platform-specific).
+  - Integrate CMS for easy content updates.
+  - Ensure cross-browser compatibility and mobile responsiveness.
+  - Add contact forms, interactive maps if needed.
+  - Collaborate with SEO Specialist on technical SEO implementation.
+  - Collaborate with Security Agent to apply security configurations.
+- **Outputs:** Fully functional website on staging server.
+
+### 3.10 QC Agent (Quality Control)
+- **Role:** Review all deliverables at each phase for adherence to requirements, brand consistency, and error-free output.
+- **Responsibilities:**
+  - Check design mockups against wireframes and brand guidelines.
+  - Proofread all copy for grammar, tone, and accuracy.
+  - Verify that all content is correctly placed in development.
+  - Ensure accessibility standards (WCAG) are met.
+  - Maintain a checklist of QC items.
+  - Collaborate with SEO and Security agents to ensure their requirements are met.
+- **Outputs:** QC reports with issues to fix, sign-off after each phase.
+
+### 3.11 Testing Agent (Software Tester)
+- **Role:** Perform functional, performance, and security testing on the developed website.
+- **Responsibilities:**
+  - Create test cases covering all user flows.
+  - Execute tests on multiple browsers/devices.
+  - Test contact form submissions, links, media.
+  - Check page load speed and Core Web Vitals.
+  - Report bugs with severity and reproduction steps.
+  - Conduct regression testing after fixes.
+  - Work with Security Agent to validate security fixes.
+- **Outputs:** Test plan, bug reports, final test summary, sign-off.
+
+### 3.12 Deployment Agent
+- **Role:** Handle final deployment to live server and post-launch monitoring.
+- **Responsibilities:**
+  - Configure hosting environment, domain, SSL (with Security Agent's input).
+  - Migrate site from staging to production.
+  - Set up backups and security measures (firewall, monitoring).
+  - Monitor site performance and security for 48 hours post-launch.
+  - Hand over admin credentials and documentation to client.
+- **Outputs:** Live website, deployment report, handover document.
+
+---
+
+## 4. Project Phases & Handoffs
+
+| Phase | Description | Lead Agent | Involved Agents | Deliverables | QC/Testing/Security Checkpoint |
+|-------|-------------|------------|-----------------|--------------|--------------------------------|
+| **1. Initiation** | Gather requirements, define scope, research | Lead | Market Analyst, Content Strategist, SEO Specialist, Security Agent | Project brief, competitor analysis, keyword list, threat model | QC reviews brief; Security reviews initial risk assessment |
+| **2. Content & Structure** | Create sitemap, wireframes, write copy, SEO strategy | Content Strategist | Copywriter, UI/UX, SEO Specialist | Sitemap, wireframes, all copy drafts, SEO keyword map | QC proofreads copy; SEO validates content alignment |
+| **3. Design** | Visual design of pages | UI/UX Designer | Graphic Designer, SEO Specialist, Security Agent | High-fidelity mockups, icons, graphics | QC checks brand alignment; SEO reviews design for SEO impact; Security reviews for any design-level risks |
+| **4. Development** | Build website with SEO and security baked in | Web Developer | SEO Specialist, Security Agent, Testing Agent | Staging site with full functionality, security configurations, SEO implementation | Testing Agent runs functional tests; QC reviews content placement; Security Agent conducts vulnerability scan |
+| **5. Testing & QC** | Comprehensive testing including security | Testing Agent | QC Agent, Security Agent, Lead | Test reports, security audit report, bug fixes, final approval | Testing sign-off, QC sign-off, Security sign-off |
+| **6. Deployment** | Go live with security measures active | Deployment Agent | Lead, Web Developer, Security Agent | Live website, handover docs, security monitoring setup | Post-launch monitoring by Security Agent |
+| **7. Review** | Post-launch feedback and performance review | Lead | All (as needed) | Project closure report, SEO performance report | - |
+
+---
+
+## 5. Communication Protocols
+
+- **Daily Stand-up:** Each agent submits a brief log to Lead Agent by 9 AM (simulated time) covering:
+  - What they did yesterday
+  - What they'll do today
+  - Any blockers
+- **Phase Handoff:** At end of each phase, all deliverables are submitted to QC Agent for review. QC compiles feedback; Security Agent provides separate security sign-off where applicable; Lead approves move to next phase.
+- **Issue Tracking:** Use a shared board (e.g., Trello, Notion) where agents can see tasks and bugs. Testing Agent logs bugs here; Developer updates status.
+- **Final Review:** Before deployment, Testing Agent provides a sign-off report, Security Agent provides final security clearance, QC provides final approval, Lead presents to client for go-ahead.
+
+---
+
+## 6. Quality & Security Requirements
+
+### 6.1 Design Quality
+- Adherence to "modern classic" aesthetic: deep blues, crisp whites, burnt orange accents.
+- Clean typography: sans-serif for headlines, serif for body text.
+- Authentic imagery: use real project photos, no stock photos.
+- Fully responsive: mobile, tablet, desktop.
+
+### 6.2 Content Quality
+- Technically accurate use of industry terms (Wärtsilä, dual-fuel, LNG, 4-stroke).
+- Consistent tone: professional, trustworthy, precise.
+- No grammatical or spelling errors.
+- SEO keywords naturally integrated as per keyword map.
+
+### 6.3 Technical & SEO Quality
+- Cross-browser compatibility (Chrome, Firefox, Safari, Edge).
+- Page load speed > 90 on Google PageSpeed Insights (mobile and desktop).
+- No broken links or missing images.
+- Forms submit correctly and send email notifications.
+- Accessibility standards (WCAG 2.1 AA) where feasible.
+- SEO: Proper meta tags, header hierarchy, alt text, structured data, XML sitemap, robots.txt.
+- Core Web Vitals pass.
+- Mobile-first indexing ready.
+
+### 6.4 Security Requirements
+- All communications over HTTPS with TLS 1.2+ and strong ciphers.
+- Security headers: Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, HSTS.
+- Protection against common web vulnerabilities: SQL injection, XSS, CSRF, etc.
+- Forms: Input validation, output encoding, CAPTCHA to prevent spam.
+- Rate limiting on login/contact forms to prevent brute force.
+- Secure session management if any user authentication (e.g., admin).
+- Protection against content scraping: hotlink protection, rate limiting, possibly JavaScript tricks.
+- Regular automated backups (daily) with off-site storage.
+- Web Application Firewall (WAF) configured.
+- Monitoring for unauthorized changes or intrusions.
+
+### 6.5 Testing Requirements
+- Testing Agent must create a test plan covering all user journeys.
+- Regression testing after bug fixes.
+- Security Agent must perform vulnerability scanning and manual penetration testing on staging.
+- Final sign-off only when all critical and major bugs are resolved, and no high-risk vulnerabilities remain.
+
+---
+
+## 7. Deliverables Checklist (Final)
+- [ ] Fully responsive website live at chosen domain
+- [ ] All copy approved and published
+- [ ] All images and graphics optimized
+- [ ] Contact form working with email notification and spam protection
+- [ ] Google Analytics, Google Search Console, Bing Webmaster Tools installed
+- [ ] SSL certificate active with strong configuration
+- [ ] Security headers implemented and verified
+- [ ] XML sitemap submitted to search engines
+- [ ] Structured data (schema) implemented for relevant content
+- [ ] Admin documentation (how to update content, security maintenance)
+- [ ] Backup system in place and tested
+- [ ] Web Application Firewall (WAF) configured
+- [ ] Monitoring tools set up for uptime and security
+
+---
+
+## 8. How to Use This Document
+
+1. **All agents must read this document thoroughly before starting work.**
+2. **Refer to it throughout the project** to ensure alignment with roles, processes, and quality/security standards.
+3. **Any deviations or clarifications** must be discussed with the Lead Agent and documented as an amendment.
+4. **This document is the single source of truth** for project structure and expectations.
+
+---
+
+**End of Project Guidelines**
+
+*This document is maintained by the Lead Agent and updated as needed with client approval.*
