@@ -47,7 +47,7 @@ export function Hero() {
       <CornerMark className="absolute top-24 left-6 sm:left-10" />
       <CornerMark className="absolute top-24 right-6 sm:right-10" flip />
 
-      <Container className="relative z-10 w-full pt-28 pb-10 lg:pt-20 lg:pb-8">
+      <Container className="relative z-10 w-full pt-32 pb-10 lg:pt-28 lg:pb-8">
         <div className="grid lg:grid-cols-12 gap-8 xl:gap-14 items-center">
           {/* Type column — left half */}
           <div className="lg:col-span-7 xl:col-span-7">

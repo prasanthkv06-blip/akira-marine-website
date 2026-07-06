@@ -27,7 +27,7 @@ export function Navbar(_: NavbarProps) {
             <>
               <button
                 className={cn(
-                  'flex items-center gap-1 text-xs uppercase tracking-[0.22em] font-medium transition-colors duration-300',
+                  'flex items-center gap-1 py-2.5 text-xs uppercase tracking-[0.22em] font-medium transition-colors duration-300',
                   'text-[var(--color-ink-100)] hover:text-[var(--color-signal-400)]',
                 )}
               >
