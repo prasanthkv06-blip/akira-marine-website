@@ -143,26 +143,22 @@ function SplitSection() {
             </Reveal>
           </div>
 
-          {/* Marine engine photograph — catalog plate on paper */}
+          {/* Marine engine — white studio backdrop dissolved via multiply blend */}
           <div className="lg:col-span-6">
             <motion.figure
-              className="relative overflow-hidden border border-[rgba(31,27,23,0.12)] bg-[var(--color-paper-50)] paper-grid"
+              className="relative"
               style={{ clipPath: revealClip as unknown as string }}
             >
-              <div aria-hidden className="absolute inset-0 paper-grid-fine opacity-40 pointer-events-none" />
-              <div className="relative w-full flex items-center justify-center p-8 sm:p-12" style={{ aspectRatio: '4 / 3' }}>
+              <div className="relative w-full flex items-center justify-center" style={{ aspectRatio: '4 / 3' }}>
                 <Image
                   src="/images/marine-engine.jpg"
                   alt="Medium-speed dual-fuel marine engine"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-contain p-8 sm:p-12"
+                  className="object-contain mix-blend-multiply"
                 />
               </div>
-              <figcaption
-                aria-hidden
-                className="absolute top-6 left-6 flex items-center gap-3 z-10"
-              >
+              <figcaption className="mt-2 flex items-center gap-3">
                 <span className="h-px w-8 bg-[var(--color-signal-400)]" />
                 <span className="eyebrow text-[var(--color-signal-400)] text-[0.65rem]">
                   Dual-fuel 4-stroke platform
