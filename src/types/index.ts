@@ -24,18 +24,6 @@ export interface TeamMember {
   certifications: string[];
 }
 
-export interface CaseStudy {
-  slug: string;
-  title: string;
-  summary: string;
-  challenge: string;
-  solution: string;
-  result: string;
-  image: string;
-  tags: string[];
-  date: string;
-}
-
 export interface EngineComponent {
   id: string;
   name: string;

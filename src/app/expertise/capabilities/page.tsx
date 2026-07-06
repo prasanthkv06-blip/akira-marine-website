@@ -1,80 +1,64 @@
 import type { Metadata } from 'next';
-import { Wrench, Cog, Search, ArrowUpCircle } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
-import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
-import { SectionHeading } from '@/components/ui/SectionHeading';
-import { FadeIn } from '@/components/animations/FadeIn';
 import { CTABanner } from '@/components/sections/CTABanner';
+import { PageHero } from '@/components/layout/PageHero';
+import { CapabilitiesSignature } from '@/components/interactive/PageSignatures';
 import { capabilities } from '@/data/capabilities';
 import { createMetadata } from '@/lib/metadata';
 
 export const metadata: Metadata = createMetadata({
   title: 'Our Capabilities',
-  description: 'Field service, engine overhauls, troubleshooting, and retrofits for Wärtsilä dual-fuel 4-stroke engines.',
+  description: 'Field service, engine overhauls, troubleshooting, and retrofits for dual-fuel 4-stroke marine engines.',
   path: '/expertise/capabilities',
 });
-
-const iconMap: Record<string, React.ElementType> = {
-  wrench: Wrench,
-  cog: Cog,
-  search: Search,
-  'arrow-up-circle': ArrowUpCircle,
-};
 
 export default function CapabilitiesPage() {
   return (
     <>
-      <section className="pt-32 pb-16 bg-gradient-to-br from-navy-900 to-navy-800">
-        <Container>
-          <Breadcrumbs items={[
-            { label: 'Home', href: '/' },
-            { label: 'Dual-Fuel Specialists', href: '/expertise' },
-            { label: 'Our Capabilities', href: '/expertise/capabilities' },
-          ]} />
-          <FadeIn>
-            <h1 className="text-4xl sm:text-5xl font-bold text-white mt-4">Our Capabilities</h1>
-            <p className="mt-4 text-xl text-navy-300 max-w-2xl">
-              Comprehensive on-site service capabilities for Wärtsilä dual-fuel engines.
-            </p>
-          </FadeIn>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="Capabilities · Field Grade"
+        title="On-site service, executed to"
+        accent="OEM specification."
+        lede="Comprehensive workshop-grade capability delivered directly to your vessel — from planned service to emergency mobilisation."
+        crumbs={[
+          { label: 'Home', href: '/' },
+          { label: 'Dual-Fuel Specialists', href: '/expertise' },
+          { label: 'Our Capabilities', href: '/expertise/capabilities' },
+        ]}
+        signature={<CapabilitiesSignature />}
+      />
 
-      <section className="py-24 bg-white">
+      <section className="py-24 sm:py-32 bg-white">
         <Container>
-          <div className="space-y-24">
-            {capabilities.map((cap, index) => {
-              const Icon = iconMap[cap.icon] || Wrench;
-              const isReversed = index % 2 === 1;
-              return (
-                <FadeIn key={cap.id}>
-                  <div className={`grid items-center gap-12 lg:grid-cols-2 ${isReversed ? 'lg:direction-rtl' : ''}`}>
-                    <div className={isReversed ? 'lg:order-2' : ''}>
-                      <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-orange-50 text-orange-600 mb-6">
-                        <Icon className="h-7 w-7" />
-                      </div>
-                      <h2 className="text-2xl sm:text-3xl font-sans font-bold text-navy-900 mb-4">
-                        {cap.title}
-                      </h2>
-                      <p className="text-navy-600 leading-relaxed mb-6">{cap.description}</p>
-                      <ul className="space-y-3">
-                        {cap.features.map((feature) => (
-                          <li key={feature} className="flex items-start gap-3">
-                            <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-500 flex-shrink-0" />
-                            <span className="text-navy-700">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className={isReversed ? 'lg:order-1' : ''}>
-                      <div className="rounded-2xl bg-gradient-to-br from-navy-100 to-navy-50 aspect-[4/3] flex items-center justify-center">
-                        <Icon className="h-24 w-24 text-navy-300" />
-                      </div>
-                    </div>
+          <div className="space-y-20">
+            {capabilities.map((cap, index) => (
+              <div key={cap.id}>
+                <div className="grid items-start gap-12 lg:grid-cols-12">
+                  <div className={`lg:col-span-5 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                    <span className="number-outline text-6xl leading-none">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <h2 className="mt-6 serif-display text-2xl text-[var(--color-ink-400)] leading-tight">
+                      {cap.title}
+                    </h2>
+                    <p className="mt-4 text-[var(--color-ink-100)] leading-relaxed">{cap.description}</p>
                   </div>
-                </FadeIn>
-              );
-            })}
+                  <div className={`lg:col-span-7 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                    <ul className="space-y-3">
+                      {cap.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-3">
+                          <span className="mt-2 h-px w-4 bg-[var(--color-signal-400)] shrink-0" />
+                          <span className="text-[var(--color-ink-200)]">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                {index < capabilities.length - 1 && (
+                  <div className="mt-16 h-px bg-[rgba(31,27,23,0.12)]" />
+                )}
+              </div>
+            ))}
           </div>
         </Container>
       </section>

@@ -1,14 +1,18 @@
 import type { Metadata } from 'next';
-import { inter, lora } from '@/lib/fonts';
+import { inter, playfair } from '@/lib/fonts';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { StructuredData } from '@/components/seo/StructuredData';
 import { SITE, COMPANY } from '@/lib/constants';
+import { services } from '@/data/services';
 import './globals.css';
+
+const hasRealPhone = !/[Xx]/.test(COMPANY.phone);
+const hasRealAlt = !!COMPANY.phoneAlt && !/[Xx]/.test(COMPANY.phoneAlt);
 
 export const metadata: Metadata = {
   title: {
-    default: `${SITE.name} — Wärtsilä Dual-Fuel Engine Specialists`,
+    default: `${SITE.name} — Dual-Fuel Marine Engine Specialists`,
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
@@ -18,7 +22,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: SITE.url,
     siteName: SITE.name,
-    title: `${SITE.name} — Wärtsilä Dual-Fuel Engine Specialists`,
+    title: `${SITE.name} — Dual-Fuel Marine Engine Specialists`,
     description: SITE.description,
     images: [{ url: SITE.ogImage, width: 1200, height: 630 }],
   },
@@ -34,25 +38,71 @@ export const metadata: Metadata = {
   },
 };
 
-const organizationSchema = {
+const professionalServiceSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': 'ProfessionalService',
+  '@id': `${SITE.url}#organization`,
   name: COMPANY.name,
+  alternateName: COMPANY.shortName,
   url: SITE.url,
-  logo: `${SITE.url}/images/logo-dark.svg`,
+  logo: `${SITE.url}/images/logo.png`,
+  image: `${SITE.url}${SITE.ogImage}`,
   description: SITE.description,
+  slogan: COMPANY.tagline,
+  areaServed: {
+    '@type': 'GeoShape',
+    name: 'Global maritime ports',
+  },
   address: {
     '@type': 'PostalAddress',
+    streetAddress: COMPANY.address.street || undefined,
     addressLocality: COMPANY.address.city,
-    addressRegion: COMPANY.address.state,
+    addressRegion: COMPANY.address.state || undefined,
     addressCountry: COMPANY.address.country,
   },
-  contactPoint: {
-    '@type': 'ContactPoint',
-    telephone: COMPANY.phone,
-    email: COMPANY.email,
-    contactType: 'customer service',
-  },
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      email: COMPANY.email,
+      contactType: 'customer service',
+      availableLanguage: ['English'],
+      ...(hasRealPhone ? { telephone: COMPANY.phone } : {}),
+    },
+    ...(hasRealAlt
+      ? [
+          {
+            '@type': 'ContactPoint',
+            telephone: COMPANY.phoneAlt,
+            contactType: 'emergency',
+            availableLanguage: ['English'],
+          },
+        ]
+      : []),
+  ],
+  makesOffer: services.map((s) => ({
+    '@type': 'Offer',
+    itemOffered: {
+      '@type': 'Service',
+      name: s.title,
+      description: s.shortDescription,
+      serviceType: 'Marine engine maintenance',
+      provider: { '@id': `${SITE.url}#organization` },
+    },
+  })),
+  knowsAbout: [
+    'Dual-fuel marine engines',
+    'LNG propulsion systems',
+    'Marine engine overhaul',
+    '4-stroke dual-fuel platforms',
+  ],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  url: SITE.url,
+  name: SITE.name,
+  publisher: { '@id': `${SITE.url}#organization` },
 };
 
 export default function RootLayout({
@@ -61,9 +111,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${lora.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="antialiased">
-        <StructuredData data={organizationSchema} />
+        <StructuredData data={professionalServiceSchema} />
+        <StructuredData data={websiteSchema} />
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />

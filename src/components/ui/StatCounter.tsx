@@ -44,7 +44,7 @@ export function StatCounter({ value, suffix = '', label, duration = 2000 }: Stat
       <div className="text-4xl font-sans font-bold text-orange-500 sm:text-5xl">
         {count}{suffix}
       </div>
-      <div className="mt-2 text-sm font-sans font-medium uppercase tracking-wider text-navy-300">
+      <div className="mt-2 text-sm font-sans font-medium uppercase tracking-wider text-[var(--color-ink-100)]">
         {label}
       </div>
     </div>

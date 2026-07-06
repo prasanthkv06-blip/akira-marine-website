@@ -22,16 +22,16 @@ export function FormField({
   onChange,
 }: FormFieldProps) {
   const baseClasses = cn(
-    'w-full rounded-lg border px-4 py-3 font-serif text-navy-900 placeholder:text-navy-400 transition-colors duration-200',
-    'focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent',
-    error ? 'border-red-400 bg-red-50' : 'border-navy-200 bg-white hover:border-navy-300'
+    'w-full rounded-lg border px-4 py-3 font-serif text-[var(--color-ink-400)] placeholder:text-[var(--color-ink-100)] transition-colors duration-200',
+    'focus:outline-none focus:ring-2 focus:ring-[var(--color-signal-400)] focus:border-transparent',
+    error ? 'border-red-400 bg-red-50' : 'border-[rgba(31,27,23,0.12)] bg-white hover:border-[rgba(31,27,23,0.20)]'
   );
 
   return (
     <div>
-      <label htmlFor={name} className="block text-sm font-sans font-medium text-navy-800 mb-2">
+      <label htmlFor={name} className="block text-sm font-sans font-medium text-[var(--color-ink-300)] mb-2">
         {label}
-        {required && <span className="text-orange-500 ml-1">*</span>}
+        {required && <span className="text-red-500 ml-1">*</span>}
       </label>
       {type === 'textarea' ? (
         <textarea

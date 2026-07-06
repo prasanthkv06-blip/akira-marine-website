@@ -2,13 +2,6 @@ import type { Certification } from '@/types';
 
 export const certifications: Certification[] = [
   {
-    id: 'wartsila-certified',
-    name: 'Wärtsilä Authorized Service Provider',
-    issuer: 'Wärtsilä Corporation',
-    description: 'Authorized to perform maintenance, overhaul, and repair services on Wärtsilä dual-fuel engine platforms.',
-    image: '/images/certifications/cert-badge-1.svg',
-  },
-  {
     id: 'iso-9001',
     name: 'ISO 9001:2015 Quality Management',
     issuer: 'International Organization for Standardization',

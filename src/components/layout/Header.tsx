@@ -1,58 +1,74 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Menu, Anchor } from 'lucide-react';
+import Image from 'next/image';
+import { Menu } from 'lucide-react';
 import { Navbar } from './Navbar';
 import { MobileMenu } from './MobileMenu';
-import { Button } from '@/components/ui/Button';
-import { cn } from '@/lib/utils';
 
+/**
+ * Header — always solid on paper. The site is a light theme; there is no
+ * dark-hero transparency state anymore.
+ */
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 48);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
     <>
       <header
-        className={cn(
-          'fixed top-0 left-0 right-0 z-40 transition-all duration-300',
-          isScrolled
-            ? 'bg-navy-900/95 backdrop-blur-md shadow-lg'
-            : 'bg-transparent'
-        )}
+        className={[
+          'fixed top-0 left-0 right-0 z-40 transition-all duration-500',
+          scrolled
+            ? 'bg-[var(--color-paper-50)]/92 backdrop-blur-md border-b border-[rgba(31,27,23,0.10)] shadow-[0_1px_0_rgba(168,50,50,0.08)]'
+            : 'bg-[var(--color-paper-50)]/70 backdrop-blur-sm border-b border-transparent',
+        ].join(' ')}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <Link href="/" className="flex items-center gap-3 group">
-              <Anchor className="h-8 w-8 text-orange-500 transition-transform duration-300 group-hover:rotate-12" />
-              <div>
-                <span className="font-sans text-xl font-bold text-white">
+          <div className={['flex items-center transition-all duration-500', scrolled ? 'h-[64px]' : 'h-[80px]'].join(' ')}>
+            <Link href="/" className="flex items-center gap-3 pr-8 group">
+              <Image
+                src="/images/logo-icon.png"
+                alt="AKIRA Marine Solutions"
+                width={200}
+                height={130}
+                className="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                priority
+                style={{ mixBlendMode: 'multiply' }}
+              />
+              <div className="hidden sm:block border-l border-[rgba(31,27,23,0.12)] pl-3">
+                <span className="font-sans text-lg font-semibold tracking-tight leading-none text-[var(--color-ink-400)]">
                   AKIRA
                 </span>
-                <span className="hidden sm:block font-sans text-xs text-navy-300 tracking-widest uppercase">
-                  Marine Services
+                <span className="block eyebrow text-[0.55rem] leading-none mt-1.5 text-[var(--color-signal-400)]">
+                  Marine Solutions
                 </span>
               </div>
             </Link>
 
-            <Navbar />
-
-            <div className="hidden lg:flex items-center gap-4">
-              <Button href="/contact" variant="primary" size="sm">
-                Get In Touch
-              </Button>
+            <div className="hidden lg:flex items-center justify-between flex-1 pl-8">
+              <Navbar scrolled />
+              <Link
+                href="/contact"
+                className="group ml-8 relative inline-flex items-center gap-2 px-6 py-2.5 text-xs uppercase tracking-[0.24em] font-medium text-white transition-all duration-300"
+                style={{ backgroundColor: 'var(--color-signal-400)' }}
+              >
+                Contact
+                <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1">→</span>
+              </Link>
             </div>
 
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden p-2 text-navy-100 hover:text-orange-400 transition-colors"
+              className="lg:hidden ml-auto p-2 text-[var(--color-ink-400)] transition-colors"
               aria-label="Open menu"
             >
               <Menu className="h-6 w-6" />
@@ -61,10 +77,7 @@ export function Header() {
         </div>
       </header>
 
-      <MobileMenu
-        isOpen={isMobileMenuOpen}
-        onClose={() => setIsMobileMenuOpen(false)}
-      />
+      <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
     </>
   );
 }

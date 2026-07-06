@@ -146,7 +146,7 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="service" className="block text-sm font-sans font-medium text-navy-800 mb-2">
+        <label htmlFor="service" className="block text-sm font-sans font-medium text-[var(--color-ink-300)] mb-2">
           Service Interest
         </label>
         <select
@@ -154,7 +154,7 @@ export function ContactForm() {
           name="service"
           value={form.service}
           onChange={(e) => updateField('service')(e.target.value)}
-          className="w-full rounded-lg border border-navy-200 bg-white px-4 py-3 font-serif text-navy-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent hover:border-navy-300 transition-colors"
+          className="w-full rounded-lg border border-[rgba(31,27,23,0.12)] bg-white px-4 py-3 font-serif text-[var(--color-ink-400)] focus:outline-none focus:ring-2 focus:ring-[var(--color-signal-400)] focus:border-transparent hover:border-[rgba(31,27,23,0.20)] transition-colors"
         >
           <option value="">Select a service...</option>
           {serviceOptions.map((opt) => (

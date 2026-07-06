@@ -13,15 +13,15 @@ interface ButtonProps {
 }
 
 const variants = {
-  primary: 'bg-orange-600 text-white hover:bg-orange-700 shadow-lg hover:shadow-xl',
-  secondary: 'bg-navy-800 text-white hover:bg-navy-700 shadow-lg hover:shadow-xl',
-  outline: 'border-2 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white',
+  primary: 'bg-[var(--color-ink-400)] text-white hover:bg-[var(--color-ink-300)]',
+  secondary: 'bg-[var(--color-ink-400)] text-white hover:bg-[var(--color-ink-300)]',
+  outline: 'border border-[var(--color-ink-400)] text-[var(--color-ink-400)] hover:bg-[var(--color-ink-400)] hover:text-white',
 };
 
 const sizes = {
   sm: 'px-4 py-2 text-sm',
-  md: 'px-6 py-3 text-base',
-  lg: 'px-8 py-4 text-lg',
+  md: 'px-6 py-3 text-sm',
+  lg: 'px-8 py-4 text-sm',
 };
 
 export function Button({
@@ -35,7 +35,7 @@ export function Button({
   type = 'button',
 }: ButtonProps) {
   const classes = cn(
-    'inline-flex items-center justify-center font-sans font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2',
+    'inline-flex items-center justify-center font-sans font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-signal-400)] focus:ring-offset-2',
     variants[variant],
     sizes[size],
     disabled && 'opacity-50 cursor-not-allowed',

@@ -1,90 +1,175 @@
 'use client';
 
-import { Shield, Zap, Globe, Award } from 'lucide-react';
+import Image from 'next/image';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { useRef } from 'react';
 import { Container } from '@/components/ui/Container';
-import { Button } from '@/components/ui/Button';
-import { FadeIn } from '@/components/animations/FadeIn';
-import { SlideIn } from '@/components/animations/SlideIn';
-
-const highlights = [
-  { icon: Shield, text: 'Wärtsilä Certified Engineers' },
-  { icon: Zap, text: '24/7 Global Response' },
-  { icon: Globe, text: '30+ Countries Covered' },
-  { icon: Award, text: '99% Uptime Rate' },
-];
+import { Reveal } from '@/components/animations/Reveal';
+import { MagneticButton } from '@/components/interactive/MagneticButton';
 
 export function ExpertisePreview() {
   return (
-    <section className="py-24 bg-navy-50">
-      <Container>
-        <div className="grid items-center gap-16 lg:grid-cols-2">
-          <SlideIn from="left">
-            <div>
-              <div className="mb-4 h-1 w-16 rounded-full bg-orange-500" />
-              <h2 className="text-3xl font-bold text-navy-900 sm:text-4xl lg:text-5xl">
-                Why Choose Our{' '}
-                <span className="text-orange-600">Dual-Fuel</span>{' '}
-                Expertise?
+    <>
+      <StatementSection />
+      <SplitSection />
+    </>
+  );
+}
+
+/** Philosophy statement paired with a real LNG carrier photograph */
+function StatementSection() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const imgScale = useTransform(scrollYProgress, [0, 1], reduce ? [1, 1] : [1.08, 1]);
+
+  return (
+    <section
+      ref={ref}
+      className="relative py-28 sm:py-36 overflow-hidden bg-[var(--color-paper-50)]"
+    >
+      <div aria-hidden className="absolute inset-0 paper-grid-fine opacity-40 pointer-events-none" />
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-px"
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(31,27,23,0.15), transparent)' }}
+      />
+
+      <Container className="relative z-10">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Text */}
+          <div className="lg:col-span-6">
+            <Reveal>
+              <div className="flex items-center gap-4 mb-6">
+                <span className="signal-rule" />
+                <span className="eyebrow text-[var(--color-signal-400)]">Philosophy</span>
+              </div>
+              <h2 className="serif-display text-[var(--color-ink-400)] text-[clamp(2.25rem,4.4vw,4rem)] leading-[1.03]">
+                We bring the workshop{' '}
+                <span className="italic text-[var(--color-signal-400)]">to your vessel.</span>
               </h2>
-              <p className="mt-6 text-lg text-navy-600 leading-relaxed">
-                The complexity of LNG-powered vessels requires more than just
-                general mechanical knowledge; it demands a deep understanding of
-                integrated fuel systems, electronic controls, and combustion dynamics.
+              <p className="mt-8 max-w-lg text-lg text-[var(--color-ink-100)] leading-relaxed font-light">
+                The complexity of LNG-powered vessels demands more than general
+                mechanical knowledge — it requires deep fluency in integrated
+                fuel systems, electronic control, and combustion dynamics.
               </p>
-              <p className="mt-4 text-lg text-navy-600 leading-relaxed">
-                Our team brings the workshop to your vessel, performing precision
-                overhauls, diagnostics, and repairs on the world&apos;s most sophisticated
-                marine engines.
-              </p>
-
-              <div className="mt-8 grid grid-cols-2 gap-4">
-                {highlights.map(({ icon: Icon, text }) => (
-                  <div key={text} className="flex items-center gap-3">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center">
-                      <Icon className="h-5 w-5 text-orange-600" />
-                    </div>
-                    <span className="text-sm font-sans font-medium text-navy-800">
-                      {text}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
               <div className="mt-10">
-                <Button href="/expertise" variant="primary">
-                  Explore Our Expertise
-                </Button>
+                <MagneticButton href="/expertise" variant="outline">
+                  Our Capabilities
+                  <span aria-hidden>→</span>
+                </MagneticButton>
               </div>
-            </div>
-          </SlideIn>
+            </Reveal>
+          </div>
 
-          <SlideIn from="right">
-            <div className="relative">
-              <div className="rounded-2xl bg-gradient-to-br from-navy-800 to-navy-900 p-8 aspect-[4/3] flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl font-sans font-bold text-orange-500 mb-4">
-                    W34DF
-                  </div>
-                  <div className="text-navy-300 font-sans text-lg">
-                    Wärtsilä Dual-Fuel Engine
-                  </div>
-                  <div className="mt-6 flex justify-center gap-4 flex-wrap">
-                    {['Gas Mode', 'Diesel Mode', 'Fuel Switching'].map((mode) => (
-                      <span
-                        key={mode}
-                        className="px-3 py-1 rounded-full bg-navy-700 text-navy-200 text-xs font-sans"
-                      >
-                        {mode}
-                      </span>
-                    ))}
-                  </div>
+          {/* Aerial LNG carrier photograph */}
+          <div className="lg:col-span-6">
+            <Reveal delay={0.15}>
+              <figure className="relative overflow-hidden border border-[rgba(31,27,23,0.14)]">
+                <div className="relative w-full" style={{ aspectRatio: '16 / 10' }}>
+                  <motion.div style={{ scale: imgScale }} className="absolute inset-0">
+                    <Image
+                      src="/images/lng-carrier-aerial.jpg"
+                      alt="Aerial view of a Moss-type LNG carrier at a loading terminal"
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover"
+                    />
+                  </motion.div>
                 </div>
+                {/* Caption overlay */}
+                <figcaption className="absolute bottom-0 left-0 right-0 flex items-center gap-3 px-5 py-3 bg-gradient-to-t from-[rgba(6,18,35,0.75)] to-transparent">
+                  <span className="h-px w-8 bg-[var(--color-signal-300)]" />
+                  <span className="eyebrow text-white text-[0.6rem]">
+                    LNG carrier · Moss-type containment
+                  </span>
+                </figcaption>
+              </figure>
+            </Reveal>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+function SplitSection() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const revealClip = useTransform(
+    scrollYProgress,
+    [0, 0.6],
+    reduce ? ['inset(0 0 0 0)', 'inset(0 0 0 0)'] : ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+  );
+
+  return (
+    <section ref={ref} className="py-28 sm:py-36 bg-white">
+      <Container>
+        <div className="grid items-center gap-16 lg:grid-cols-12">
+          <div className="lg:col-span-6">
+            <Reveal>
+              <div className="flex items-center gap-4 mb-6">
+                <span className="signal-rule" />
+                <span className="eyebrow">Discipline</span>
               </div>
-              {/* Decorative element */}
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-2xl bg-orange-500/10 -z-10" />
-              <div className="absolute -top-6 -left-6 w-24 h-24 rounded-2xl bg-navy-200/50 -z-10" />
-            </div>
-          </SlideIn>
+              <h2 className="serif-display text-[clamp(2.25rem,4.6vw,4.25rem)] text-[var(--color-ink-400)] leading-[1.02]">
+                Built for{' '}
+                <span className="italic text-[var(--color-signal-400)]">precision.</span>
+              </h2>
+              <p className="mt-8 text-lg text-[var(--color-ink-100)] leading-relaxed max-w-lg font-light">
+                Our field engineers execute overhauls, diagnostics, and repairs on
+                the world&apos;s most sophisticated marine engines — ensuring
+                maximum uptime and operational safety across every mile at sea.
+              </p>
+              <ul className="mt-10 space-y-4">
+                {[
+                  'Medium-speed dual-fuel platform specialists',
+                  'Mobile workshop, no dry-docking required',
+                  'Documented to OEM warranty standard',
+                ].map((line) => (
+                  <li key={line} className="flex items-start gap-4 text-[var(--color-ink-200)]">
+                    <span className="mt-2 h-px w-6 bg-[var(--color-signal-400)] shrink-0" />
+                    <span className="text-sm leading-relaxed">{line}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-10">
+                <MagneticButton href="/about" variant="ghost">
+                  About AKIRA
+                  <span aria-hidden>→</span>
+                </MagneticButton>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Marine engine photograph — catalog plate on paper */}
+          <div className="lg:col-span-6">
+            <motion.figure
+              className="relative overflow-hidden border border-[rgba(31,27,23,0.12)] bg-[var(--color-paper-50)] paper-grid"
+              style={{ clipPath: revealClip as unknown as string }}
+            >
+              <div aria-hidden className="absolute inset-0 paper-grid-fine opacity-40 pointer-events-none" />
+              <div className="relative w-full flex items-center justify-center p-8 sm:p-12" style={{ aspectRatio: '4 / 3' }}>
+                <Image
+                  src="/images/marine-engine.jpg"
+                  alt="Medium-speed dual-fuel marine engine"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-contain p-8 sm:p-12"
+                />
+              </div>
+              <figcaption
+                aria-hidden
+                className="absolute top-6 left-6 flex items-center gap-3 z-10"
+              >
+                <span className="h-px w-8 bg-[var(--color-signal-400)]" />
+                <span className="eyebrow text-[var(--color-signal-400)] text-[0.65rem]">
+                  Dual-fuel 4-stroke platform
+                </span>
+              </figcaption>
+            </motion.figure>
+          </div>
         </div>
       </Container>
     </section>

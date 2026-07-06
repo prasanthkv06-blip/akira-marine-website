@@ -7,9 +7,9 @@ interface BadgeProps {
 }
 
 const variants = {
-  primary: 'bg-navy-800 text-white',
+  primary: 'bg-[var(--color-ink-300)] text-white',
   accent: 'bg-orange-500 text-white',
-  muted: 'bg-navy-100 text-navy-700',
+  muted: 'bg-[rgba(31,27,23,0.08)] text-[var(--color-ink-200)]',
 };
 
 export function Badge({ text, variant = 'muted', className }: BadgeProps) {

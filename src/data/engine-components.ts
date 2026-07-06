@@ -4,10 +4,10 @@ export const engineComponents: EngineComponent[] = [
   {
     id: 'cylinder-head',
     name: 'Cylinder Head Assembly',
-    svgPath: 'M 200 100 L 350 100 L 350 200 L 200 200 Z',
-    hotspotX: 275,
-    hotspotY: 150,
-    description: 'Complete cylinder head overhaul and reconditioning services for Wärtsilä dual-fuel engines. Our precision machining and testing ensures optimal combustion chamber geometry and valve sealing.',
+    svgPath: 'M 140 50 L 540 50 L 540 85 L 140 85 Z',
+    hotspotX: 340,
+    hotspotY: 68,
+    description: 'Complete cylinder head overhaul and reconditioning services for dual-fuel marine engines. Our precision machining and testing ensures optimal combustion chamber geometry and valve sealing.',
     services: [
       'Valve seat grinding and lapping',
       'Crack detection (MPI & dye penetrant)',
@@ -20,9 +20,9 @@ export const engineComponents: EngineComponent[] = [
   {
     id: 'turbocharger',
     name: 'Turbocharger System',
-    svgPath: 'M 400 80 L 520 80 L 540 120 L 540 220 L 520 260 L 400 260 L 380 220 L 380 120 Z',
-    hotspotX: 460,
-    hotspotY: 170,
+    svgPath: 'M 585 55 L 715 55 L 715 195 L 585 195 Z',
+    hotspotX: 650,
+    hotspotY: 125,
     description: 'Expert turbocharger maintenance and balancing for maximum air supply efficiency. Critical for optimal dual-fuel combustion in both gas and diesel operating modes.',
     services: [
       'Rotor dynamic balancing',
@@ -36,9 +36,9 @@ export const engineComponents: EngineComponent[] = [
   {
     id: 'gas-valve-unit',
     name: 'Gas Valve Unit (GVU)',
-    svgPath: 'M 580 140 L 700 140 L 700 260 L 580 260 Z',
-    hotspotX: 640,
-    hotspotY: 200,
+    svgPath: 'M 595 225 L 715 225 L 715 335 L 595 335 Z',
+    hotspotX: 655,
+    hotspotY: 280,
     description: 'Specialized maintenance of the gas valve units that control LNG fuel delivery to each cylinder. Precision calibration ensures safe and efficient dual-fuel operation.',
     services: [
       'Gas admission valve overhaul',
@@ -52,9 +52,9 @@ export const engineComponents: EngineComponent[] = [
   {
     id: 'fuel-injection',
     name: 'Fuel Injection System',
-    svgPath: 'M 150 250 L 300 250 L 300 350 L 150 350 Z',
-    hotspotX: 225,
-    hotspotY: 300,
+    svgPath: 'M 135 88 L 545 88 L 545 105 L 135 105 Z',
+    hotspotX: 340,
+    hotspotY: 95,
     description: 'Comprehensive fuel injection system service for both pilot fuel and main diesel injection. Ensures clean combustion and compliance with emission standards.',
     services: [
       'Injector nozzle testing and reconditioning',
@@ -67,13 +67,13 @@ export const engineComponents: EngineComponent[] = [
   },
   {
     id: 'control-systems',
-    name: 'UNIGEN Control Systems',
-    svgPath: 'M 350 280 L 520 280 L 520 380 L 350 380 Z',
-    hotspotX: 435,
-    hotspotY: 330,
-    description: 'Advanced diagnostics and configuration of Wärtsilä UNIGEN engine control systems. Expert calibration of fuel-air mixing, ignition timing, and safety parameters.',
+    name: 'Engine Control Systems',
+    svgPath: 'M 595 360 L 725 360 L 725 450 L 595 450 Z',
+    hotspotX: 660,
+    hotspotY: 405,
+    description: 'Advanced diagnostics and configuration of dual-fuel engine control systems. Expert calibration of fuel-air mixing, ignition timing, and safety parameters.',
     services: [
-      'UNIGEN software updates and calibration',
+      'Control software updates and calibration',
       'Sensor verification and replacement',
       'Safety system parameter validation',
       'Gas/diesel mode switching optimization',

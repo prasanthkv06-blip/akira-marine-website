@@ -15,7 +15,7 @@ interface CardProps {
 export function Card({ title, description, image, href, tags, children, className }: CardProps) {
   const content = (
     <div className={cn(
-      'group overflow-hidden rounded-xl bg-white shadow-md transition-all duration-300 hover:shadow-xl border border-navy-100',
+      'group overflow-hidden rounded-xl bg-white shadow-md transition-all duration-300 hover:shadow-xl border border-[rgba(31,27,23,0.08)]',
       href && 'cursor-pointer hover:-translate-y-1',
       className
     )}>
@@ -33,14 +33,14 @@ export function Card({ title, description, image, href, tags, children, classNam
         {tags && tags.length > 0 && (
           <div className="mb-3 flex flex-wrap gap-2">
             {tags.map((tag) => (
-              <span key={tag} className="rounded-full bg-navy-50 px-3 py-1 text-xs font-sans font-medium text-navy-700">
+              <span key={tag} className="rounded-full bg-[var(--color-paper-50)] px-3 py-1 text-xs font-sans font-medium text-[var(--color-ink-200)]">
                 {tag}
               </span>
             ))}
           </div>
         )}
-        <h3 className="mb-2 text-xl font-sans font-bold text-navy-900">{title}</h3>
-        <p className="text-navy-600 leading-relaxed">{description}</p>
+        <h3 className="mb-2 text-xl font-sans font-bold text-[var(--color-ink-400)]">{title}</h3>
+        <p className="text-[var(--color-ink-200)] leading-relaxed">{description}</p>
         {children}
       </div>
     </div>

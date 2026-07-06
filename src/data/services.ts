@@ -4,12 +4,12 @@ export const services: Service[] = [
   {
     id: 'planned-maintenance',
     title: 'Planned Maintenance',
-    shortDescription: 'Scheduled field service adhering to Wärtsilä guidelines for warranty compliance and peak performance.',
-    fullDescription: 'Scheduled field service adhering to Wärtsilä\'s stringent guidelines, ensuring warranty compliance and peak performance in both gas and fuel-oil modes. Our maintenance programs are designed to maximize engine reliability while minimizing operational disruptions.',
+    shortDescription: 'Scheduled field service adhering to OEM guidelines for warranty compliance and peak performance.',
+    fullDescription: 'Scheduled field service adhering to stringent OEM guidelines, ensuring warranty compliance and peak performance in both gas and fuel-oil modes. Our maintenance programs are designed to maximize engine reliability while minimizing operational disruptions.',
     icon: 'wrench',
     image: '/images/services/field-service.jpg',
     features: [
-      'Adherence to Wärtsilä maintenance schedules',
+      'Adherence to OEM maintenance schedules',
       'Warranty compliance assurance',
       'Gas and fuel-oil mode optimization',
       'Detailed service documentation',
@@ -40,7 +40,7 @@ export const services: Service[] = [
     image: '/images/services/lng-system.jpg',
     features: [
       'Gas valve unit maintenance',
-      'LNGPac fuel system servicing',
+      'LNG fuel handling system servicing',
       'Safety system inspection and testing',
       'Fuel gas supply system support',
       'Boil-off gas management systems',

@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
 import { contactFormSchema } from '@/lib/validation';
 import { checkRateLimit } from '@/lib/rate-limiter';
 import { sanitize } from '@/lib/sanitize';
+
+const getResend = () => {
+  if (!process.env.RESEND_API_KEY) return null;
+  return new Resend(process.env.RESEND_API_KEY);
+};
 
 export async function POST(request: NextRequest) {
   // Rate limiting
@@ -44,9 +50,28 @@ export async function POST(request: NextRequest) {
       message: sanitize(result.data.message),
     };
 
-    // In production, send email here using Resend, Nodemailer, etc.
-    // For now, log the submission
-    console.log('Contact form submission:', sanitized);
+    // Send email via Resend
+    const resend = getResend();
+    if (resend) {
+      await resend.emails.send({
+        from: 'AKIRA Website <noreply@akiramarinesolutions.com>',
+        to: ['info@akiramarinesolutions.com', 'prasanthkv06@gmail.com'],
+        replyTo: sanitized.email,
+        subject: `New enquiry from ${sanitized.name}${sanitized.company ? ` — ${sanitized.company}` : ''}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${sanitized.name}</p>
+          <p><strong>Email:</strong> ${sanitized.email}</p>
+          ${sanitized.phone ? `<p><strong>Phone:</strong> ${sanitized.phone}</p>` : ''}
+          ${sanitized.company ? `<p><strong>Company:</strong> ${sanitized.company}</p>` : ''}
+          ${sanitized.service ? `<p><strong>Service:</strong> ${sanitized.service}</p>` : ''}
+          <p><strong>Message:</strong></p>
+          <p>${sanitized.message.replace(/\n/g, '<br>')}</p>
+        `,
+      });
+    } else {
+      console.log('Contact form submission (no RESEND_API_KEY):', sanitized);
+    }
 
     return NextResponse.json({ success: true });
   } catch {

@@ -12,7 +12,7 @@ export function SectionHeading({
   title,
   subtitle,
   alignment = 'center',
-  accentLine = true,
+  accentLine = false,
   className,
 }: SectionHeadingProps) {
   return (
@@ -23,15 +23,15 @@ export function SectionHeading({
     )}>
       {accentLine && (
         <div className={cn(
-          'mb-4 h-1 w-16 rounded-full bg-orange-500',
+          'mb-4 h-px w-16 bg-[var(--color-ink-400)]',
           alignment === 'center' && 'mx-auto'
         )} />
       )}
-      <h2 className="text-3xl font-bold text-navy-900 sm:text-4xl lg:text-5xl">
+      <h2 className="text-3xl font-bold text-[var(--color-ink-400)] uppercase sm:text-4xl lg:text-5xl">
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-4 max-w-2xl text-lg text-navy-600 leading-relaxed mx-auto">
+        <p className="mt-4 max-w-2xl text-lg text-[var(--color-ink-100)] leading-relaxed mx-auto">
           {subtitle}
         </p>
       )}

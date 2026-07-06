@@ -9,6 +9,7 @@ interface NavLinkProps {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  scrolled?: boolean;
 }
 
 export function NavLink({ href, children, className, onClick }: NavLinkProps) {
@@ -20,12 +21,16 @@ export function NavLink({ href, children, className, onClick }: NavLinkProps) {
       href={href}
       onClick={onClick}
       className={cn(
-        'font-sans text-sm font-medium transition-colors duration-200',
-        isActive ? 'text-orange-500' : 'text-navy-100 hover:text-orange-400',
-        className
+        'relative text-xs uppercase tracking-[0.22em] font-medium transition-colors duration-300',
+        isActive ? 'text-[var(--color-ink-400)]' : 'text-[var(--color-ink-100)]',
+        'hover:text-[var(--color-signal-400)]',
+        className,
       )}
     >
       {children}
+      {isActive && (
+        <span aria-hidden className="absolute -bottom-1.5 left-0 right-0 h-px bg-[var(--color-signal-400)]" />
+      )}
     </Link>
   );
 }
