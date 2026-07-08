@@ -42,6 +42,8 @@ export function FormField({
           required={required}
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? `${name}-error` : undefined}
           className={baseClasses}
         />
       ) : (
@@ -53,11 +55,13 @@ export function FormField({
           required={required}
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? `${name}-error` : undefined}
           className={baseClasses}
         />
       )}
       {error && (
-        <p className="mt-1 text-sm text-red-600 font-sans">{error}</p>
+        <p id={`${name}-error`} className="mt-1 text-sm text-red-600 font-sans">{error}</p>
       )}
     </div>
   );

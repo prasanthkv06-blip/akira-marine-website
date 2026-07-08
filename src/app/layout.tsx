@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { inter, playfair } from '@/lib/fonts';
+import { archivo, plexSans, plexMono } from '@/lib/fonts';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { StructuredData } from '@/components/seo/StructuredData';
@@ -50,8 +50,8 @@ const professionalServiceSchema = {
   description: SITE.description,
   slogan: COMPANY.tagline,
   areaServed: {
-    '@type': 'GeoShape',
-    name: 'Global maritime ports',
+    '@type': 'Country',
+    name: 'United Arab Emirates',
   },
   address: {
     '@type': 'PostalAddress',
@@ -111,12 +111,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${archivo.variable} ${plexSans.variable} ${plexMono.variable}`}>
       <body className="antialiased">
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-[var(--color-ink-400)] focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white">Skip to content</a>
         <StructuredData data={professionalServiceSchema} />
         <StructuredData data={websiteSchema} />
         <Header />
-        <main className="min-h-screen">{children}</main>
+        <main id="main" tabIndex={-1} className="min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>

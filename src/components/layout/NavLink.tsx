@@ -9,10 +9,10 @@ interface NavLinkProps {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
-  scrolled?: boolean;
+  onDark?: boolean;
 }
 
-export function NavLink({ href, children, className, onClick }: NavLinkProps) {
+export function NavLink({ href, children, className, onClick, onDark = false }: NavLinkProps) {
   const pathname = usePathname();
   const isActive = pathname === href || (href !== '/' && pathname.startsWith(href));
 
@@ -22,14 +22,24 @@ export function NavLink({ href, children, className, onClick }: NavLinkProps) {
       onClick={onClick}
       className={cn(
         'relative inline-flex items-center py-2.5 text-xs uppercase tracking-[0.22em] font-medium transition-colors duration-300',
-        isActive ? 'text-[var(--color-ink-400)]' : 'text-[var(--color-ink-100)]',
-        'hover:text-[var(--color-signal-400)]',
+        onDark
+          ? cn(isActive ? 'text-white' : 'text-white/75', 'hover:text-white')
+          : cn(
+              isActive ? 'text-[var(--color-ink-400)]' : 'text-[var(--color-ink-100)]',
+              'hover:text-[var(--color-signal-400)]',
+            ),
         className,
       )}
     >
       {children}
       {isActive && (
-        <span aria-hidden className="absolute bottom-1.5 left-0 right-0 h-px bg-[var(--color-signal-400)]" />
+        <span
+          aria-hidden
+          className={cn(
+            'absolute bottom-1.5 left-0 right-0 h-px',
+            onDark ? 'bg-white' : 'bg-[var(--color-signal-400)]',
+          )}
+        />
       )}
     </Link>
   );

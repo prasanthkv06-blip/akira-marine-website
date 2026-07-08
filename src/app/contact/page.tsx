@@ -1,15 +1,13 @@
 import type { Metadata } from 'next';
-import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { ContactForm } from '@/components/forms/ContactForm';
 import { PageHero } from '@/components/layout/PageHero';
-import { ContactSignature } from '@/components/interactive/PageSignatures';
 import { COMPANY } from '@/lib/constants';
 import { createMetadata } from '@/lib/metadata';
 
 export const metadata: Metadata = createMetadata({
   title: 'Contact Us',
-  description: 'Get in touch with Akira Marine Solutions for dual-fuel marine engine maintenance, emergency support, or service inquiries.',
+  description: 'Get in touch with Akira Marine Solutions for dual-fuel marine engine maintenance, overhauls, and service enquiries.',
   path: '/contact',
 });
 
@@ -24,23 +22,14 @@ const primaryTel = hasRealPhone ? COMPANY.phone : (hasRealAlt ? COMPANY.phoneAlt
 
 const contactInfo = [
   ...(phoneValue
-    ? [{ icon: Phone, label: 'Phone', value: phoneValue, href: `tel:${primaryTel.replace(/\s+/g, '')}` }]
+    ? [{ label: 'Phone', value: phoneValue, href: `tel:${primaryTel.replace(/\s+/g, '')}` }]
     : []),
-  { icon: Mail, label: 'Email', value: COMPANY.email, href: `mailto:${COMPANY.email}` },
+  { label: 'Email', value: COMPANY.email, href: `mailto:${COMPANY.email}` },
   {
-    icon: MapPin,
     label: 'Location',
     value: [COMPANY.address.street, COMPANY.address.city, COMPANY.address.state, COMPANY.address.country]
       .filter(Boolean)
       .join(', '),
-  },
-  {
-    icon: Clock,
-    label: 'Emergency',
-    value: '24/7 Response',
-    href: primaryTel
-      ? `tel:${primaryTel.replace(/\s+/g, '')}`
-      : `mailto:${COMPANY.email}?subject=Emergency%20Service`,
   },
 ];
 
@@ -48,12 +37,12 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
-        eyebrow="Contact · Dispatch"
+        eyebrow="Contact · Abu Dhabi"
         title="Speak directly with our"
-        accent="field engineers."
-        lede="Consultations begin with a rigorous performance and warranty audit. No boilerplate, no bots — a real conversation with the team that will board your vessel."
+        accent="engineers."
+        lede="Tell us your engine platform, your port, and your requirement — we'll respond with a clear scope, timeline, and plan."
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Contact', href: '/contact' }]}
-        signature={<ContactSignature />}
+        image={{ src: "/images/engineer-workshop.jpg", alt: "A marine engineer beside a large engine under overhaul in the workshop", objectPosition: "22% 50%" }}
       />
 
       <section className="py-24 sm:py-32 bg-white">
@@ -61,44 +50,40 @@ export default function ContactPage() {
           <div className="grid gap-16 lg:grid-cols-12">
             {/* Form */}
             <div className="lg:col-span-7">
-              <div className="flex items-center gap-4 mb-6">
-                <span className="signal-rule" />
-                <span className="eyebrow">Send a message</span>
-              </div>
-              <h2 className="serif-display text-[clamp(1.75rem,3vw,2.5rem)] text-[var(--color-ink-400)] leading-[1.1] mb-10">
-                Tell us about your{' '}
-                <span className="italic text-[var(--color-signal-400)]">engine and situation.</span>
+              <span className="eyebrow text-[var(--color-signal-400)]">Service enquiry</span>
+              <h2 className="mt-5 text-[clamp(2rem,3.6vw,3.25rem)] font-semibold leading-[1.05] tracking-tight text-[var(--color-ink-400)]">
+                Tell us about your engine and situation.
               </h2>
-              <ContactForm />
+              <div className="mt-10">
+                <ContactForm />
+              </div>
             </div>
 
             {/* Contact info */}
             <div className="lg:col-span-5">
-              <div className="border border-[rgba(31,27,23,0.12)] bg-[var(--color-paper-50)] p-8 lg:p-10">
-                <div className="flex items-center gap-4 mb-8">
-                  <span className="signal-rule" />
-                  <span className="eyebrow">Direct Lines</span>
-                </div>
-                <div className="space-y-6">
-                  {contactInfo.map(({ icon: Icon, label, value, href }) => (
-                    <div key={label} className="flex items-start gap-4 border-b border-[rgba(31,27,23,0.10)] pb-6 last:border-0 last:pb-0">
-                      <div className="flex-shrink-0 w-10 h-10 bg-[rgba(168,50,50,0.10)] flex items-center justify-center text-[var(--color-signal-400)]">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="eyebrow text-[var(--color-ink-100)] text-[0.6rem]">{label}</p>
-                        {href ? (
-                          <a href={href} className="block mt-1 text-[var(--color-ink-400)] font-medium hover:text-[var(--color-signal-400)] transition-colors break-words">
-                            {value}
-                          </a>
-                        ) : (
-                          <p className="mt-1 text-[var(--color-ink-400)] font-medium break-words">{value}</p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <span className="eyebrow text-[var(--color-signal-400)]">Direct Lines</span>
+              <dl className="mt-8">
+                {contactInfo.map(({ label, value, href }) => (
+                  <div
+                    key={label}
+                    className="border-t border-[rgba(23,25,27,0.10)] py-6 first:border-t-0 first:pt-0"
+                  >
+                    <dt className="eyebrow text-[var(--color-steel-400)]">{label}</dt>
+                    <dd className="mt-2">
+                      {href ? (
+                        <a
+                          href={href}
+                          className="break-words font-medium text-[var(--color-ink-400)] transition-colors hover:text-[var(--color-signal-400)]"
+                        >
+                          {value}
+                        </a>
+                      ) : (
+                        <span className="break-words font-medium text-[var(--color-ink-400)]">{value}</span>
+                      )}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </div>
         </Container>

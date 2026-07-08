@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Container } from '@/components/ui/Container';
 import { CTABanner } from '@/components/sections/CTABanner';
 import { PageHero } from '@/components/layout/PageHero';
-import { CapabilitiesSignature } from '@/components/interactive/PageSignatures';
 import { capabilities } from '@/data/capabilities';
 import { createMetadata } from '@/lib/metadata';
 
@@ -25,41 +24,46 @@ export default function CapabilitiesPage() {
           { label: 'Dual-Fuel Specialists', href: '/expertise' },
           { label: 'Our Capabilities', href: '/expertise/capabilities' },
         ]}
-        signature={<CapabilitiesSignature />}
+        image={{ src: "/images/shipyard.jpg", alt: "Ships and cranes at an industrial shipyard quay" }}
       />
 
-      <section className="py-24 sm:py-32 bg-white">
+      <section className="bg-white py-16 sm:py-24">
         <Container>
-          <div className="space-y-20">
-            {capabilities.map((cap, index) => (
-              <div key={cap.id}>
-                <div className="grid items-start gap-12 lg:grid-cols-12">
-                  <div className={`lg:col-span-5 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                    <span className="number-outline text-6xl leading-none">
+          {capabilities.map((cap, index) => {
+            const flip = index % 2 === 1;
+            return (
+              <article
+                key={cap.id}
+                id={cap.id}
+                className="scroll-mt-28 border-t border-[rgba(23,25,27,0.12)] py-16 first:border-t-0 sm:py-20"
+              >
+                <div className="grid gap-x-16 gap-y-10 lg:grid-cols-12">
+                  <div className={`lg:col-span-5 ${flip ? 'lg:order-2' : ''}`}>
+                    <div
+                      className="tabular text-6xl font-extrabold leading-none text-[var(--color-steel-200)]"
+                      style={{ fontFamily: 'var(--font-display)' }}
+                    >
                       {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <h2 className="mt-6 serif-display text-2xl text-[var(--color-ink-400)] leading-tight">
+                    </div>
+                    <h2 className="mt-6 text-[clamp(1.7rem,2.8vw,2.4rem)] font-semibold leading-[1.1] tracking-tight text-[var(--color-ink-400)]">
                       {cap.title}
                     </h2>
-                    <p className="mt-4 text-[var(--color-ink-100)] leading-relaxed">{cap.description}</p>
                   </div>
-                  <div className={`lg:col-span-7 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                    <ul className="space-y-3">
+
+                  <div className={`lg:col-span-7 ${flip ? 'lg:order-1' : ''}`}>
+                    <p className="text-lg leading-relaxed text-[var(--color-ink-200)]">{cap.description}</p>
+                    <ul className="mt-8 grid gap-x-10 gap-y-3 sm:grid-cols-2">
                       {cap.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-3">
-                          <span className="mt-2 h-px w-4 bg-[var(--color-signal-400)] shrink-0" />
-                          <span className="text-[var(--color-ink-200)]">{feature}</span>
+                        <li key={feature} className="text-[15px] leading-relaxed text-[var(--color-ink-200)]">
+                          {feature}
                         </li>
                       ))}
                     </ul>
                   </div>
                 </div>
-                {index < capabilities.length - 1 && (
-                  <div className="mt-16 h-px bg-[rgba(31,27,23,0.12)]" />
-                )}
-              </div>
-            ))}
-          </div>
+              </article>
+            );
+          })}
         </Container>
       </section>
 

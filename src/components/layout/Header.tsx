@@ -1,22 +1,29 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Menu } from 'lucide-react';
 import { Navbar } from './Navbar';
 import { MobileMenu } from './MobileMenu';
+import { cn } from '@/lib/utils';
 
 /**
- * Header — always solid on paper. The site is a light theme; there is no
- * dark-hero transparency state anymore.
+ * Header — floats transparent over a page's dark cinematic hero, then
+ * solidifies to graphite-on-warm-white once scrolled past it. Pages without a
+ * dark hero always render the solid treatment.
  */
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  const hasDarkHero = pathname === '/';
+  const onDark = hasDarkHero && !scrolled;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 48);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -25,51 +32,71 @@ export function Header() {
   return (
     <>
       <header
-        className={[
-          'fixed top-0 left-0 right-0 z-40 transition-all duration-500',
-          scrolled
-            ? 'bg-[var(--color-paper-50)]/92 backdrop-blur-md border-b border-[rgba(31,27,23,0.10)] shadow-[0_1px_0_rgba(168,50,50,0.08)]'
-            : 'bg-[var(--color-paper-50)]/70 backdrop-blur-sm border-b border-transparent',
-        ].join(' ')}
+        className={cn(
+          'fixed inset-x-0 top-0 z-40 transition-all duration-500',
+          onDark
+            ? 'border-b border-transparent bg-transparent'
+            : scrolled
+              ? 'border-b border-[rgba(23,25,27,0.10)] bg-[var(--color-paper-50)]/92 backdrop-blur-md'
+              : 'border-b border-transparent bg-[var(--color-paper-50)]/80 backdrop-blur-sm',
+        )}
       >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className={['flex items-center transition-all duration-500', scrolled ? 'h-[64px]' : 'h-[80px]'].join(' ')}>
-            <Link href="/" className="flex items-center gap-3 pr-8 group">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 2xl:max-w-[1520px] 2xl:px-16">
+          <div className={cn('flex items-center transition-all duration-500', scrolled ? 'h-[64px]' : 'h-[84px]')}>
+            <Link href="/" className="group flex items-center gap-3 pr-8">
               <Image
-                src="/images/logo-icon.png"
+                src={onDark ? '/images/logo-light.png' : '/images/logo-icon.png'}
                 alt="AKIRA Marine Solutions"
                 width={200}
                 height={130}
-                className="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                className="h-9 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
                 priority
-                style={{ mixBlendMode: 'multiply' }}
+                style={onDark ? undefined : { mixBlendMode: 'multiply' }}
               />
-              <div className="hidden sm:block border-l border-[rgba(31,27,23,0.12)] pl-3">
-                <span className="font-sans text-lg font-semibold tracking-tight leading-none text-[var(--color-ink-400)]">
+              <div className={cn('hidden border-l pl-3 sm:block', onDark ? 'border-white/25' : 'border-[rgba(23,25,27,0.14)]')}>
+                <span
+                  className={cn(
+                    'font-sans text-lg font-semibold leading-none tracking-tight',
+                    onDark ? 'text-white' : 'text-[var(--color-ink-400)]',
+                  )}
+                >
                   AKIRA
                 </span>
-                <span className="block eyebrow text-[0.55rem] leading-none mt-1.5 text-[var(--color-signal-400)]">
+                <span
+                  className={cn(
+                    'eyebrow mt-1.5 block text-[0.55rem] leading-none',
+                    onDark ? 'text-white/70' : 'text-[var(--color-steel-400)]',
+                  )}
+                >
                   Marine Solutions
                 </span>
               </div>
             </Link>
 
-            <div className="hidden lg:flex items-center justify-between flex-1 pl-8">
-              <Navbar scrolled />
+            <div className="hidden flex-1 items-center justify-between pl-8 lg:flex">
+              <Navbar onDark={onDark} />
               <Link
                 href="/contact"
-                className="group ml-8 relative inline-flex items-center gap-2 px-6 py-2.5 text-xs uppercase tracking-[0.24em] font-medium text-white transition-all duration-300"
-                style={{ backgroundColor: 'var(--color-signal-400)' }}
+                className={cn(
+                  'ml-8 inline-flex items-center px-6 py-2.5 text-xs font-medium uppercase tracking-[0.14em] transition-colors duration-300',
+                  onDark
+                    ? 'border border-white/40 text-white hover:bg-white hover:text-[var(--color-ink-400)]'
+                    : 'bg-[var(--color-signal-400)] text-white hover:bg-[var(--color-signal-500)]',
+                )}
               >
                 Contact
-                <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1">→</span>
               </Link>
             </div>
 
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden ml-auto p-2 text-[var(--color-ink-400)] transition-colors"
+              className={cn(
+                'ml-auto p-2 transition-colors lg:hidden',
+                onDark ? 'text-white' : 'text-[var(--color-ink-400)]',
+              )}
               aria-label="Open menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               <Menu className="h-6 w-6" />
             </button>

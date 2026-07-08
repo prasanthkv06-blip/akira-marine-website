@@ -7,7 +7,7 @@ export const capabilities: Capability[] = [
     description: 'Our onboard workshop approach brings the full capability of a dedicated service facility directly to your vessel. For dual-fuel 4-stroke marine engines, this means reduced vessel downtime, no dry-docking requirements, and maintenance performed by specialists who understand the unique demands of LNG-powered operations.',
     icon: 'wrench',
     features: [
-      'Mobile workshop deployment to any global port',
+      'Mobile workshop deployment to your port of call',
       'Scheduled maintenance per OEM guidelines',
       'Warranty-compliant service procedures',
       'Real-time performance monitoring',

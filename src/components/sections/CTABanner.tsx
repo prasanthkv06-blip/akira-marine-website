@@ -1,8 +1,7 @@
-'use client';
-
 import Link from 'next/link';
+import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
-import { Reveal } from '@/components/animations/Reveal';
+import { COMPANY } from '@/lib/constants';
 
 interface CTABannerProps {
   headline?: string;
@@ -11,78 +10,77 @@ interface CTABannerProps {
   buttonHref?: string;
 }
 
+const hasPhone = !/[Xx]/.test(COMPANY.phone);
+
 export function CTABanner({
-  headline = 'Ready to command precision performance?',
-  description = 'Speak directly with our dual-fuel engine specialists. Consultations begin with a rigorous performance and warranty audit — no obligation, no boilerplate.',
-  buttonText = 'Get In Touch',
+  headline = 'Request our service.',
+  description = 'Send us your engine platform and port of call. We respond with scope, timeline, and a documented service plan — no obligation.',
+  buttonText = 'Request service',
   buttonHref = '/contact',
 }: CTABannerProps) {
   return (
-    <section
-      className="relative py-32 sm:py-44 overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, var(--color-ink-400) 0%, var(--color-ink-500) 100%)' }}
-    >
+    <section className="relative overflow-hidden bg-[#0a1418] text-white">
+      {/* cinematic engine-room close */}
+      <div aria-hidden className="absolute inset-0">
+        <Image src="/images/engine-room.jpg" alt="" fill sizes="100vw" className="object-cover" />
+      </div>
       <div
         aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(circle at 50% 120%, rgba(168,50,50,0.28) 0%, transparent 60%)',
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-x-0 top-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(168,50,50,0.55), transparent)' }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-x-0 bottom-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(168,50,50,0.28), transparent)' }}
+        className="absolute inset-0"
+        style={{ background: 'linear-gradient(90deg, rgba(10,20,24,0.95) 0%, rgba(10,20,24,0.82) 46%, rgba(10,20,24,0.58) 100%)' }}
       />
 
-      <Container className="relative z-10">
-        <Reveal className="text-center max-w-4xl mx-auto">
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <span className="signal-rule" />
-            <span className="eyebrow">Consultation</span>
-            <span className="signal-rule" />
+      <Container className="relative z-10 py-28 sm:py-40">
+        <span className="eyebrow text-[var(--color-signal-300)]">Contact</span>
+
+        <div className="mt-10 grid gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <h2 className="max-w-2xl text-[clamp(2.2rem,4.6vw,4.25rem)] font-extrabold leading-[1.0] tracking-[-0.025em] text-white">
+              {headline}
+            </h2>
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/70">{description}</p>
+            <div className="mt-10">
+              <Link
+                href={buttonHref}
+                className="group relative inline-flex items-center overflow-hidden px-8 py-4 text-sm font-medium uppercase tracking-[0.14em] text-white"
+                style={{ backgroundColor: 'var(--color-signal-400)' }}
+              >
+                <span className="relative z-10">{buttonText}</span>
+                <span
+                  aria-hidden
+                  className="absolute inset-0 translate-y-full bg-[var(--color-signal-600)] transition-transform duration-300 ease-out group-hover:translate-y-0"
+                />
+              </Link>
+            </div>
           </div>
-          <h2 className="serif-display text-white text-[clamp(2.25rem,5vw,4.75rem)] leading-[1.02]">
-            {headline.split(/(\s+)/).map((word, i) =>
-              /performance/i.test(word) ? (
-                <span key={i} className="italic text-[var(--color-signal-300)]">
-                  {word}
-                </span>
-              ) : (
-                <span key={i}>{word}</span>
-              ),
+
+          <dl className="self-start border-t border-white/20 lg:col-span-4 lg:col-start-9">
+            <ContactRow k="BASE" v={`${COMPANY.address.city}, ${COMPANY.address.country}`} />
+            {hasPhone && (
+              <ContactRow k="TEL" v={COMPANY.phone} href={`tel:${COMPANY.phone.replace(/\s+/g, '')}`} />
             )}
-          </h2>
-          <p className="mt-8 text-lg text-[var(--color-paper-300)] leading-relaxed max-w-2xl mx-auto font-light">
-            {description}
-          </p>
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-6">
-            <Link
-              href={buttonHref}
-              className="group inline-flex items-center gap-3 px-8 py-4 text-sm font-medium uppercase tracking-[0.24em] text-white transition-all duration-300"
-              style={{
-                backgroundColor: 'var(--color-signal-400)',
-                boxShadow: '0 10px 24px -8px rgba(168,50,50,0.5)',
-              }}
-            >
-              {buttonText}
-              <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1">→</span>
-            </Link>
-            <a
-              href="tel:+971"
-              className="text-sm uppercase tracking-[0.28em] text-white/70 hover:text-[var(--color-signal-300)] transition-colors"
-            >
-              Or call our team
-            </a>
-          </div>
-        </Reveal>
+            <ContactRow k="EMAIL" v={COMPANY.email} href={`mailto:${COMPANY.email}`} />
+            <ContactRow k="EST." v="2026" />
+          </dl>
+        </div>
       </Container>
     </section>
+  );
+}
+
+function ContactRow({ k, v, href }: { k: string; v: string; href?: string }) {
+  return (
+    <div className="grid grid-cols-[5rem_1fr] gap-4 border-b border-white/15 py-3">
+      <dt className="ds-meta text-white/50">{k}</dt>
+      <dd className="tabular text-sm font-medium text-white/90 sm:text-base">
+        {href ? (
+          <a href={href} className="transition-colors hover:text-[var(--color-signal-300)]">
+            {v}
+          </a>
+        ) : (
+          v
+        )}
+      </dd>
+    </div>
   );
 }

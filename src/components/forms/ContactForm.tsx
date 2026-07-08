@@ -30,7 +30,7 @@ const serviceOptions = [
   'Planned Maintenance',
   'Engine Overhaul',
   'LNG Fuel System Support',
-  '24/7 Emergency Service',
+  'Emergency Field Response',
   'Troubleshooting & Diagnostics',
   'Other',
 ];
@@ -177,7 +177,7 @@ export function ContactForm() {
       <FormStatus status={status} />
 
       <Button type="submit" variant="primary" size="lg" disabled={status === 'loading'} className="w-full sm:w-auto">
-        {status === 'loading' ? 'Sending...' : 'Send Message'}
+        {status === 'loading' ? 'Sending...' : 'Send enquiry'}
       </Button>
     </form>
   );

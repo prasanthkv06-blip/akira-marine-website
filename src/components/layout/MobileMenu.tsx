@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronDown } from 'lucide-react';
@@ -13,6 +13,20 @@ interface MobileMenuProps {
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isOpen, onClose]);
+
+  useEffect(() => {
+    if (isOpen) closeButtonRef.current?.focus();
+  }, [isOpen]);
 
   return (
     <AnimatePresence>
@@ -30,6 +44,10 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'tween', duration: 0.3 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            id="mobile-menu"
             className="fixed right-0 top-0 bottom-0 w-80 max-w-[85vw] bg-[var(--color-paper-50)] z-50 lg:hidden overflow-y-auto border-l border-[rgba(31,27,23,0.10)]"
           >
             <div className="flex items-center justify-between p-6 border-b border-[rgba(31,27,23,0.10)]">
@@ -38,6 +56,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 <span className="eyebrow">Menu</span>
               </div>
               <button
+                ref={closeButtonRef}
                 onClick={onClose}
                 className="p-2 text-[var(--color-ink-100)] hover:text-[var(--color-signal-400)] transition-colors"
                 aria-label="Close menu"

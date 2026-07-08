@@ -21,6 +21,6 @@ export const COMPANY = {
 export const SITE = {
   name: 'Akira Marine Solutions',
   url: 'https://akiramarinesolutions.com',
-  description: 'Specialized field service maintenance for dual-fuel 4-stroke marine engines. Expert on-site overhauls, diagnostics, and LNG fuel system support for marine vessels worldwide.',
+  description: 'Specialized field service maintenance for dual-fuel 4-stroke marine engines — expert on-site overhauls, diagnostics, and LNG fuel-system support, based in Abu Dhabi.',
   ogImage: '/og-image.jpg',
 } as const;

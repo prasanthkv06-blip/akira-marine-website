@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
         `,
       });
     } else {
-      console.log('Contact form submission (no RESEND_API_KEY):', sanitized);
+      console.warn('[contact] RESEND_API_KEY not configured — submission accepted but email not sent');
     }
 
     return NextResponse.json({ success: true });

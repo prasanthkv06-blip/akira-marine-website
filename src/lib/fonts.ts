@@ -1,16 +1,24 @@
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 
-export const inter = Inter({
+// Premium industrial type system: Archivo (a grotesque with engineering
+// character) as the display voice, IBM Plex Sans for body, Plex Mono for data.
+export const archivo = Archivo({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-archivo',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800'],
+});
+
+export const plexSans = IBM_Plex_Sans({
+  subsets: ['latin'],
+  variable: '--font-plex-sans',
   display: 'swap',
   weight: ['300', '400', '500', '600', '700'],
 });
 
-export const playfair = Playfair_Display({
+export const plexMono = IBM_Plex_Mono({
   subsets: ['latin'],
-  variable: '--font-playfair',
+  variable: '--font-plex-mono',
   display: 'swap',
-  weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'],
+  weight: ['400', '500', '600'],
 });

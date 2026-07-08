@@ -9,7 +9,7 @@ export function FormStatus({ status, message }: FormStatusProps) {
   if (status === 'idle') return null;
 
   return (
-    <div className={`rounded-lg p-4 flex items-start gap-3 ${
+    <div role="status" aria-live="polite" className={`rounded-lg p-4 flex items-start gap-3 ${
       status === 'loading' ? 'bg-[var(--color-paper-50)] text-[var(--color-ink-200)]' :
       status === 'success' ? 'bg-green-50 text-green-800' :
       'bg-red-50 text-red-800'

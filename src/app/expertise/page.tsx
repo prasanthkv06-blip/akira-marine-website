@@ -3,12 +3,11 @@ import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { CTABanner } from '@/components/sections/CTABanner';
 import { PageHero } from '@/components/layout/PageHero';
-import { ExpertiseSignature } from '@/components/interactive/PageSignatures';
 import { createMetadata } from '@/lib/metadata';
 
 export const metadata: Metadata = createMetadata({
   title: 'Dual-Fuel Engine Expertise',
-  description: 'Discover our specialized expertise in dual-fuel 4-stroke marine engine maintenance, technical capabilities, and industry certifications.',
+  description: 'Discover our specialized expertise in dual-fuel 4-stroke marine engine maintenance, technical capabilities, and the standards we work to.',
   path: '/expertise',
 });
 
@@ -36,28 +35,29 @@ export default function ExpertisePage() {
         accent="OEM tolerance."
         lede="Two disciplines — Capabilities and Technical Expertise — organised around one operating standard. Diagnosis, execution, documentation."
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Dual-Fuel Specialists', href: '/expertise' }]}
-        signature={<ExpertiseSignature />}
+        image={{ src: '/images/engine-room.jpg', alt: 'Interior of a ship engine room with pipework and machinery' }}
       />
 
-      <section className="py-24 sm:py-32 bg-white">
+      <section className="bg-white py-24 sm:py-32">
         <Container>
-          <div className="grid gap-12 md:grid-cols-2 max-w-4xl mx-auto">
+          <div className="mx-auto grid max-w-4xl gap-x-16 gap-y-16 md:grid-cols-2">
             {expertiseAreas.map((area) => (
-              <Link
-                key={area.href}
-                href={area.href}
-                className="group block relative pt-6 overflow-hidden"
-              >
-                <span className="absolute top-0 left-0 h-px w-8 bg-[var(--color-signal-400)] transition-all duration-500 group-hover:w-full" />
-                <span className="number-outline text-6xl leading-none block">{area.num}</span>
-                <h2 className="mt-6 serif-display text-2xl text-[var(--color-ink-400)] leading-tight">
+              <Link key={area.href} href={area.href} className="group block">
+                <div
+                  className="tabular text-3xl font-semibold text-[var(--color-steel-200)] transition-colors duration-300 group-hover:text-[var(--color-signal-400)]"
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
+                  {area.num}
+                </div>
+                <h2 className="mt-6 text-[clamp(1.5rem,2.4vw,1.9rem)] font-semibold leading-tight tracking-tight text-[var(--color-ink-400)]">
                   {area.title}
                 </h2>
-                <p className="mt-3 text-[var(--color-ink-100)] leading-relaxed">{area.description}</p>
-                <div className="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-[var(--color-ink-200)] group-hover:text-[var(--color-signal-400)] transition-colors">
+                <p className="mt-4 max-w-md leading-relaxed text-[var(--color-ink-100)]">
+                  {area.description}
+                </p>
+                <span className="mt-6 inline-block text-sm font-medium text-[var(--color-ink-400)] underline decoration-[var(--color-steel-200)] decoration-1 underline-offset-[6px] transition-colors group-hover:text-[var(--color-signal-400)] group-hover:decoration-[var(--color-signal-400)]">
                   Learn more
-                  <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1">→</span>
-                </div>
+                </span>
               </Link>
             ))}
           </div>
