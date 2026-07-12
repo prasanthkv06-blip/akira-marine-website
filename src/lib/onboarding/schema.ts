@@ -11,7 +11,7 @@ export type UploadField = (typeof UPLOAD_FIELDS)[number];
 export const fileMetaSchema = z.object({
   field: z.enum(UPLOAD_FIELDS),
   filename: z.string().min(1).max(200),
-  contentType: z.string().refine((t) => FILE_CONSTRAINTS.accept.includes(t), 'Unsupported file type'),
+  contentType: z.string().refine((t) => (FILE_CONSTRAINTS.accept as readonly string[]).includes(t), 'Unsupported file type'),
   size: z.number().int().positive().max(FILE_CONSTRAINTS.maxBytes, 'File too large (max 10 MB)'),
 });
 export type FileMeta = z.infer<typeof fileMetaSchema>;
