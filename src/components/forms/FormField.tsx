@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 interface FormFieldProps {
   label: string;
   name: string;
-  type?: 'text' | 'email' | 'tel' | 'textarea';
+  type?: 'text' | 'email' | 'tel' | 'date' | 'number' | 'textarea';
   placeholder?: string;
   required?: boolean;
   error?: string;
