@@ -10,6 +10,7 @@ vi.mock('@/lib/onboarding/submissions', async (orig) => ({
   createSubmission: vi.fn(async () => ({ id: 'sub-1' })),
 }));
 vi.mock('@/lib/onboarding/notify', () => ({ sendSubmissionNotification: vi.fn() }));
+vi.mock('@/lib/rate-limiter', () => ({ checkRateLimit: vi.fn(() => ({ allowed: true })) }));
 
 import { POST } from './route';
 import { getInviteByToken, markInviteUsed } from '@/lib/onboarding/invites';
