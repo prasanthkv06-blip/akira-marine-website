@@ -6,11 +6,11 @@ import { createInvite } from '@/lib/onboarding/invites';
 const schema = z.object({ name: z.string().min(1).max(120), email: z.string().email() });
 
 export async function POST(req: Request) {
-  if (!(await getOwnerSession())) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   try {
+    if (!(await getOwnerSession())) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const parsed = schema.safeParse(await req.json().catch(() => null));
     if (!parsed.success) return NextResponse.json({ error: 'Invalid input' }, { status: 422 });
 
