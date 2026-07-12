@@ -36,9 +36,14 @@ export function InviteForm() {
         setMessage(body?.error ?? 'Failed to create invite.');
         return;
       }
+      const sentTo = email;
       setUrl(body.url as string);
       setStatus('success');
-      setMessage('Invite created.');
+      setMessage(
+        body?.emailed
+          ? `Invite created and emailed to ${sentTo}.`
+          : 'Invite created, but the email could not be sent. Copy the link below and send it manually.',
+      );
       setName('');
       setEmail('');
       router.refresh();

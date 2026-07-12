@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { InviteForm } from '@/components/admin/InviteForm';
-import { listInvites } from '@/lib/onboarding/invites';
+import { InviteRowActions } from '@/components/admin/InviteRowActions';
+import { listInvites, isInviteUsable } from '@/lib/onboarding/invites';
+import { env } from '@/lib/env';
 import { createMetadata } from '@/lib/metadata';
 import type { InviteRow } from '@/lib/onboarding/types';
 
@@ -17,8 +19,17 @@ function statusBadgeClass(status: InviteRow['status']): string {
   return 'bg-[var(--color-paper-50)] text-[var(--color-ink-200)]';
 }
 
+function displayStatus(invite: InviteRow, now: Date): InviteRow['status'] {
+  // `status` is only ever 'pending' or 'used' in the DB; expiry is by timestamp.
+  if (invite.status === 'pending' && new Date(invite.expires_at).getTime() <= now.getTime()) {
+    return 'expired';
+  }
+  return invite.status;
+}
+
 export default async function AdminInvitesPage() {
   const invites = await listInvites();
+  const now = new Date();
 
   return (
     <section className="pt-36 pb-24 sm:pb-32 bg-white">
@@ -54,23 +65,34 @@ export default async function AdminInvitesPage() {
                       <th className="py-3 pr-4 font-sans font-medium">Email</th>
                       <th className="py-3 pr-4 font-sans font-medium">Status</th>
                       <th className="py-3 pr-4 font-sans font-medium">Created</th>
+                      <th className="py-3 pr-4 font-sans font-medium">Link</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {invites.map((invite) => (
+                    {invites.map((invite) => {
+                      const status = displayStatus(invite, now);
+                      return (
                       <tr key={invite.id} className="border-b border-[rgba(31,27,23,0.06)]">
                         <td className="py-3 pr-4 text-[var(--color-ink-400)]">{invite.invitee_name}</td>
                         <td className="py-3 pr-4 text-[var(--color-ink-200)]">{invite.invitee_email}</td>
                         <td className="py-3 pr-4">
-                          <span className={`rounded-full px-2.5 py-1 text-xs font-sans font-medium ${statusBadgeClass(invite.status)}`}>
-                            {invite.status}
+                          <span className={`rounded-full px-2.5 py-1 text-xs font-sans font-medium ${statusBadgeClass(status)}`}>
+                            {status}
                           </span>
                         </td>
                         <td className="py-3 pr-4 text-[var(--color-ink-100)]">
                           {new Date(invite.created_at).toLocaleDateString()}
                         </td>
+                        <td className="py-3 pr-4 text-sm">
+                          <InviteRowActions
+                            id={invite.id}
+                            url={`${env.appUrl}/onboarding/${invite.token}`}
+                            usable={isInviteUsable(invite, now)}
+                          />
+                        </td>
                       </tr>
-                    ))}
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

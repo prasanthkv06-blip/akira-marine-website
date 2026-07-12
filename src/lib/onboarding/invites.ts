@@ -42,6 +42,13 @@ export async function getInviteByToken(token: string): Promise<InviteRow | null>
   return (data as InviteRow) ?? null;
 }
 
+export async function getInviteById(id: string): Promise<InviteRow | null> {
+  const db = getAdminClient();
+  const { data, error } = await db.from('invites').select('*').eq('id', id).maybeSingle();
+  if (error) throw new Error(`getInviteById failed: ${error.message}`);
+  return (data as InviteRow) ?? null;
+}
+
 export async function markInviteUsed(id: string): Promise<void> {
   const db = getAdminClient();
   const { error } = await db.from('invites')
