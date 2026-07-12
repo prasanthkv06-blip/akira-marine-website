@@ -43,7 +43,7 @@ export async function createSubmission(inviteId: string, d: OnboardingSubmission
   return { id: data.id as string };
 }
 
-export async function listSubmissions() {
+export async function listSubmissions(): Promise<Array<{ id: string; full_name: string; created_at: string }>> {
   const db = getAdminClient();
   const { data, error } = await db.from('submissions')
     .select('id, full_name, created_at')
@@ -54,7 +54,8 @@ export async function listSubmissions() {
 
 export async function getSubmission(id: string): Promise<SubmissionRow | null> {
   const db = getAdminClient();
-  const { data } = await db.from('submissions').select('*').eq('id', id).maybeSingle();
+  const { data, error } = await db.from('submissions').select('*').eq('id', id).maybeSingle();
+  if (error) throw new Error(`getSubmission failed: ${error.message}`);
   return (data as SubmissionRow) ?? null;
 }
 
@@ -69,7 +70,9 @@ export async function deleteSubmission(id: string): Promise<void> {
   const db = getAdminClient();
   const row = await getSubmission(id);
   if (!row) return;
-  await db.storage.from(BUCKET).remove([row.photo_path, row.passport_front_path, row.passport_back_path]);
+  const { error: storageError } = await db.storage.from(BUCKET)
+    .remove([row.photo_path, row.passport_front_path, row.passport_back_path]);
+  if (storageError) throw new Error(`deleteSubmission (storage) failed: ${storageError.message}`);
   const { error } = await db.from('submissions').delete().eq('id', id);
-  if (error) throw new Error(`deleteSubmission failed: ${error.message}`);
+  if (error) throw new Error(`deleteSubmission (row) failed: ${error.message}`);
 }
