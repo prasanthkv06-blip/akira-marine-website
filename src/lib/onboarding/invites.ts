@@ -13,7 +13,7 @@ export function isInviteUsable(invite: InviteRow, now: Date): boolean {
     && new Date(invite.expires_at).getTime() > now.getTime();
 }
 
-export async function createInvite(input: { name: string; email: string; ttlDays?: number }) {
+export async function createInvite(input: { name: string; email: string; ttlDays?: number }): Promise<{ id: string; token: string; url: string }> {
   const token = generateInviteToken();
   const ttl = input.ttlDays ?? 14;
   const expires = new Date(Date.now() + ttl * 24 * 60 * 60 * 1000).toISOString();
@@ -27,13 +27,15 @@ export async function createInvite(input: { name: string; email: string; ttlDays
 
 export async function getInviteByToken(token: string): Promise<InviteRow | null> {
   const db = getAdminClient();
-  const { data } = await db.from('invites').select('*').eq('token', token).maybeSingle();
+  const { data, error } = await db.from('invites').select('*').eq('token', token).maybeSingle();
+  if (error) throw new Error(`getInviteByToken failed: ${error.message}`);
   return (data as InviteRow) ?? null;
 }
 
 export async function markInviteUsed(id: string): Promise<void> {
   const db = getAdminClient();
   const { error } = await db.from('invites')
-    .update({ status: 'used', used_at: new Date().toISOString() }).eq('id', id);
+    .update({ status: 'used', used_at: new Date().toISOString() })
+    .eq('id', id).eq('status', 'pending');
   if (error) throw new Error(`markInviteUsed failed: ${error.message}`);
 }
