@@ -7,7 +7,14 @@ export async function getServerClient() {
   const cookieStore = await cookies();
   const cookieMethods: CookieMethodsServer = {
     getAll: () => cookieStore.getAll(),
-    setAll: (list) => list.forEach(({ name, value, options }) => cookieStore.set(name, value, options)),
+    setAll: (list) => {
+      try {
+        list.forEach(({ name, value, options }) => cookieStore.set(name, value, options));
+      } catch {
+        // Called from a Server Component render, where cookie writes are disallowed.
+        // Safe to ignore — session refresh happens in Route Handlers / on next request.
+      }
+    },
   };
   return createServerClient(env.supabaseUrl, env.supabaseAnonKey, {
     cookies: cookieMethods,
