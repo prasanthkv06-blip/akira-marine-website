@@ -56,9 +56,10 @@ export function OnboardingForm({ token, inviteeName }: OnboardingFormProps) {
   };
 
   function buildPayload(paths: Record<(typeof PATH_KEYS)[number], string>) {
+    const yearsRaw = form.yearsExperience;
     return {
       ...form,
-      yearsExperience: Number(form.yearsExperience),
+      yearsExperience: yearsRaw.trim() === '' ? undefined : Number(yearsRaw),
       ...paths,
       consent: true as const,
     };
