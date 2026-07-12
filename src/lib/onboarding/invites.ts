@@ -25,6 +25,16 @@ export async function createInvite(input: { name: string; email: string; ttlDays
   return { id: data.id as string, token, url: `${env.appUrl}/onboarding/${token}` };
 }
 
+export async function listInvites(limit = 20): Promise<InviteRow[]> {
+  const db = getAdminClient();
+  const { data, error } = await db.from('invites')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(limit);
+  if (error) throw new Error(`listInvites failed: ${error.message}`);
+  return data as InviteRow[];
+}
+
 export async function getInviteByToken(token: string): Promise<InviteRow | null> {
   const db = getAdminClient();
   const { data, error } = await db.from('invites').select('*').eq('token', token).maybeSingle();
