@@ -13,6 +13,7 @@ vi.mock('@/lib/onboarding/notify', () => ({ sendSubmissionNotification: vi.fn() 
 
 import { POST } from './route';
 import { getInviteByToken, markInviteUsed } from '@/lib/onboarding/invites';
+import { sendSubmissionNotification } from '@/lib/onboarding/notify';
 
 const valid = {
   fullName: 'John Smith', dateOfBirth: '1990-05-01', nationality: 'Indian',
@@ -46,6 +47,22 @@ describe('POST /api/onboarding/submit', () => {
   });
   it('201 and marks invite used on the happy path', async () => {
     (getInviteByToken as any).mockResolvedValue({ id: 'abc' });
+    const good = { ...valid, photoPath: 'onboarding/abc/photo-1.jpg',
+      passportFrontPath: 'onboarding/abc/passport_front-1.jpg',
+      passportBackPath: 'onboarding/abc/passport_back-1.jpg' };
+    const res = await POST(reqWith({ token: 't', data: good }));
+    expect(res.status).toBe(201);
+    expect(markInviteUsed).toHaveBeenCalledWith('abc');
+  });
+  it('400 when a file path does not belong to the invite', async () => {
+    (getInviteByToken as any).mockResolvedValue({ id: 'abc' });
+    const mismatched = { ...valid, photoPath: 'onboarding/OTHER/photo-1.jpg' };
+    const res = await POST(reqWith({ token: 't', data: mismatched }));
+    expect(res.status).toBe(400);
+  });
+  it('201 and still marks invite used when the notification email fails', async () => {
+    (getInviteByToken as any).mockResolvedValue({ id: 'abc' });
+    (sendSubmissionNotification as any).mockRejectedValue(new Error('smtp down'));
     const good = { ...valid, photoPath: 'onboarding/abc/photo-1.jpg',
       passportFrontPath: 'onboarding/abc/passport_front-1.jpg',
       passportBackPath: 'onboarding/abc/passport_back-1.jpg' };
