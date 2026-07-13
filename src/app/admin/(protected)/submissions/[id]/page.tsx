@@ -62,6 +62,28 @@ const FIELD_GROUPS: Array<{ heading: string; fields: Array<{ key: string; label:
       { key: 'reference_phone', label: 'Phone' },
     ],
   },
+  {
+    heading: 'Next of kin',
+    fields: [
+      { key: 'nok_name', label: 'Name' },
+      { key: 'nok_relationship', label: 'Relationship' },
+      { key: 'nok_address', label: 'Address' },
+      { key: 'nok_contact', label: 'Mobile / Email' },
+      { key: 'insurance_beneficiary', label: 'Insurance beneficiary' },
+    ],
+  },
+  {
+    heading: 'Bank account (USD salary)',
+    fields: [
+      { key: 'bank_beneficiary_name', label: 'Beneficiary name' },
+      { key: 'bank_name', label: 'Bank name' },
+      { key: 'bank_branch', label: 'Branch' },
+      { key: 'bank_address', label: 'Bank address' },
+      { key: 'bank_account_number', label: 'Account number' },
+      { key: 'bank_swift', label: 'SWIFT code' },
+      { key: 'bank_currency', label: 'Currency' },
+    ],
+  },
 ];
 
 function renderValue(value: unknown): string {

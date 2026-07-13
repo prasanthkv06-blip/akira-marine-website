@@ -213,8 +213,9 @@ export function OnboardingForm({ token, inviteeName }: OnboardingFormProps) {
             className="mt-1 h-4 w-4 shrink-0 accent-[var(--color-signal-400)]"
           />
           <label htmlFor="consent" className="text-sm text-[var(--color-ink-200)] leading-relaxed">
-            I consent to Akira Marine Solutions collecting and storing the personal details and
-            documents submitted here for the purpose of onboarding and crew documentation.
+            I consent to Akira Marine Solutions collecting and storing the personal, passport,
+            next-of-kin and bank account details and documents submitted here for the purpose of
+            onboarding, crew documentation, salary payment and insurance.
           </label>
         </div>
         <p id="consent-note" className="mt-2 ml-7 text-xs text-[var(--color-steel-400)]">

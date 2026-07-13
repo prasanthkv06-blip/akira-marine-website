@@ -28,6 +28,18 @@ export const initialOnboardingForm: OnboardingFormState = {
   yearsExperience: '',
   referenceName: '',
   referencePhone: '',
+  nokName: '',
+  nokRelationship: '',
+  nokAddress: '',
+  nokContact: '',
+  insuranceBeneficiary: '',
+  bankBeneficiaryName: '',
+  bankName: '',
+  bankBranch: '',
+  bankAddress: '',
+  bankAccountNumber: '',
+  bankSwift: '',
+  bankCurrency: 'USD',
 };
 
 export interface FieldConfig {
@@ -83,6 +95,33 @@ export const FIELD_GROUPS: FieldGroup[] = [
     fields: [
       { name: 'referenceName', label: 'Reference name', required: true },
       { name: 'referencePhone', label: 'Reference phone', type: 'tel', required: true },
+    ],
+  },
+  {
+    heading: 'Next of kin',
+    fields: [
+      { name: 'nokName', label: 'Name of next of kin', required: true },
+      { name: 'nokRelationship', label: 'Relationship', required: true },
+      { name: 'nokAddress', label: 'Address', required: true },
+      { name: 'nokContact', label: 'Mobile / Email', required: true },
+      {
+        name: 'insuranceBeneficiary',
+        label: 'Beneficiary for insurance proceeds',
+        required: true,
+        placeholder: 'Same as next of kin, or full name',
+      },
+    ],
+  },
+  {
+    heading: 'Bank account (USD salary)',
+    fields: [
+      { name: 'bankBeneficiaryName', label: 'Beneficiary name', required: true },
+      { name: 'bankName', label: 'Bank name', required: true },
+      { name: 'bankBranch', label: 'Branch', required: true },
+      { name: 'bankAddress', label: 'Bank address', required: true },
+      { name: 'bankAccountNumber', label: 'Account number', required: true },
+      { name: 'bankSwift', label: 'SWIFT code', required: true, placeholder: 'e.g. ADCBAEAA' },
+      { name: 'bankCurrency', label: 'Currency', required: true },
     ],
   },
 ];
